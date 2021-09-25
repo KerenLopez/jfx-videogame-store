@@ -4,15 +4,25 @@ import java.util.ArrayList;
 
 public class HashTable<K,V> implements IHashTable<K,V> {
 	private int size;
+	private int maxSize;
 	private ArrayList<Slot<K,V>> hashTable;
 
 	public HashTable(int s) {
-		size=s;
-		hashTable=new ArrayList<>(size);
+		maxSize=s;
+		size=0;
+		hashTable=new ArrayList<>(maxSize);
 	}
 	
-	public int getSize() {
-		return size;
+	public int getMaxSize() {
+		return maxSize;
+	}
+	
+	public boolean slotsAvailable() {
+		boolean available=false;
+		if(size<maxSize) {
+			available=true;
+		}
+		return available;
 	}
 	
 	@Override
@@ -28,7 +38,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			}else {
 				i++;
 			}
-		}while(i<size && searched==null);
+		}while(i<maxSize && searched==null);
 
 		return searched;
 	}
@@ -42,11 +52,12 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			if(hashTable.get(h)==null) {
 				hashTable.add(h, new Slot<>(key,value));
 				i=Integer.MAX_VALUE;
+				size++;
 
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<maxSize);
 
 	}
 
@@ -61,10 +72,11 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			if(hashTable.get(h)!=null && hashTable.get(h).getKey()==key) {
 				hashTable.set(h,null);
 				deleted=true;
+				size--;
 			}else {
 				i++;
 			}
-		}while(i<size && !deleted);
+		}while(i<maxSize && !deleted);
 
 		
 		return deleted;
@@ -73,7 +85,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 
 	public int h(int i, int hf) {
 		int hn=0;
-		hn=(hf+i)%size;
+		hn=(hf+i)%maxSize;
 		return hn;
 	}
 
@@ -86,7 +98,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			hf+=Character.getNumericValue(c)*(str.length()-1-j);
 		}
 
-		hf=hf%size;
+		hf=hf%maxSize;
 
 		return hf;
 	}
@@ -104,7 +116,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<maxSize);
 		
 	}
 }
