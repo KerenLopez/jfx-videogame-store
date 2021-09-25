@@ -1,4 +1,4 @@
-package model;
+package ui;
 
 import java.io.IOException;
 
@@ -6,10 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import model.VideogameStore;
 
 public class VideogameStoreGUI {
 
@@ -23,7 +26,6 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private TextField txtNumShelves;
-
 
 	@FXML
 	private TextField txtIndicator;
@@ -145,12 +147,24 @@ public class VideogameStoreGUI {
 
 	@FXML
 	public void nextShelves(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/shelves.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.setCenter(menuPane);
-		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		if(!txtNumCashiers.getText().equals("") && !txtNumShelves.getText().equals("")) {
+			try {
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/shelves.fxml"));
+				fxmlLoader.setController(this);
+				Parent menuPane = fxmlLoader.load();
+				mainPane.getChildren().clear();
+				mainPane.setCenter(menuPane);
+				mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+			}catch(NumberFormatException num) {
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados");
+				alert1.showAndWait();
+			}
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 
@@ -212,5 +226,12 @@ public class VideogameStoreGUI {
 
 	}
 
-
+	public void showValidationErrorAlert() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error de validacion");
+		alert.setHeaderText(null);
+		alert.setContentText("Recuerde diligenciar cada uno de los campos");
+		alert.showAndWait();
+	}
+	
 }
