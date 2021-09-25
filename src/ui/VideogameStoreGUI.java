@@ -18,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import model.Product;
+import model.Videogame;
 import model.VideogameStore;
 
 public class VideogameStoreGUI {
@@ -159,6 +160,15 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 	}
+	
+	private void initializeTableViewS2() {
+		ObservableList<Videogame> observableList;
+		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		tvS2.setItems(observableList);
+		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
+		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("time"));
+	}
 
 	@FXML
 	public void nextScreenSection2(ActionEvent event) throws IOException {
@@ -168,6 +178,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		initializeTableViewS2();
 	}
 
 	@FXML
