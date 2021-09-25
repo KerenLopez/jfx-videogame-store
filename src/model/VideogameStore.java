@@ -6,19 +6,18 @@ import exceptions.NegativeValueException;
 import javafx.util.Callback;
 
 public class VideogameStore {
-	
-	private int numCashiers;
-	
+
+	private Client[] cashiers;
+	private ShelvesHT shelves;
+
 	public VideogameStore() {
-		numCashiers = 0;
+		
 	}
+
 
 	
-	public void setNumCashiers(int numCashiers) {
-		this.numCashiers = numCashiers;
-	}
 
-	public void createGame(String c, String p, char i, String a) throws NegativeValueException {
+	public void addGame(String c, String p, char i, String a) throws NegativeValueException {
 		int code = Integer.parseInt(c);
 		double price = Double.parseDouble(p);
 		char shelf = i;
@@ -37,12 +36,15 @@ public class VideogameStore {
 			throw new NegativeValueException(amount);
 		}
 		if(correct) {
+
 			Videogame vg = new Videogame(code, price, shelf, amount);
+			shelves.addGameToShelf(vg);
 		}
 	}
 
 
 	public ArrayList<Videogame> returnGames() {
-		
+
 	}
+	//if(shelves.getShelves().search(i).slotsAvailable()) {
 }
