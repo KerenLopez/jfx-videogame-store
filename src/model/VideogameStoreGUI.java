@@ -66,6 +66,26 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 	}
+        
+        @FXML
+        public void nextScreenAddGameToClient(ActionEvent event) throws IOException {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addGameToClient.fxml"));
+            fxmlLoader.setController(this);
+            Parent menuPane = fxmlLoader.load();
+            mainPane.getChildren().clear();
+            mainPane.setCenter(menuPane);
+            mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+        }
+        
+        @FXML
+        public void nextScreenSection2(ActionEvent event) throws IOException {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("section2.fxml"));
+            fxmlLoader.setController(this);
+            Parent menuPane = fxmlLoader.load();
+            mainPane.getChildren().clear();
+            mainPane.setCenter(menuPane);
+            mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+        }
 
 	@FXML
 	public void goToSection3(ActionEvent event) throws IOException {
