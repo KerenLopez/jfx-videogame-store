@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane layoutX="444.0" layoutY="99.0" prefHeight="314.0" prefWidth="331.0">
+         <center>
+            <TableView fx:id="tvClientlList" prefHeight="314.0" prefWidth="331.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="tcIdClient" prefWidth="136.0" text="Cedula" />
+                <TableColumn fx:id="tcGamesList" prefWidth="193.0" text="Listado de juegos" />
+              </columns>
+            </TableView>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="21.0" layoutY="237.0" prefHeight="314.0" prefWidth="341.0">
+         <center>
+            <TableView fx:id="tvGameslist" prefHeight="251.0" prefWidth="268.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="tcGames" prefWidth="340.0" text="Catalogo de juego" />
+              </columns>
+            </TableView>
+         </center>
+      </BorderPane>
+      <Label layoutX="513.0" layoutY="62.0" text="Listado de los clientes">
+         <font>
+            <Font name="Juice ITC" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="192.0" text="Catalogo de juegos">
+         <font>
+            <Font name="Juice ITC" size="30.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="57.0" layoutY="33.0" prefHeight="87.0" prefWidth="341.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Cedula del cliente">
+               <font>
+                  <Font name="Juice ITC" size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtIdClient" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Button fx:id="buttonAddclient" layoutX="150.0" layoutY="107.0" mnemonicParsing="false" text="Agregar Cliente">
+         <font>
+            <Font name="Impact" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="addGametoclient" layoutX="209.0" layoutY="193.0" mnemonicParsing="false" text="Agregar Juego">
+         <font>
+            <Font name="Impact" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="724.0" layoutY="507.0" mnemonicParsing="false" onAction="#nextScreen" text="Siguiente">
+         <font>
+            <Font name="Impact" size="20.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
