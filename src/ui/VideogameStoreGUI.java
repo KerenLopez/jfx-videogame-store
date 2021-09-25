@@ -2,16 +2,22 @@ package ui;
 
 import java.io.IOException;
 
+import exceptions.NegativeValueException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import model.Product;
 import model.VideogameStore;
 
 public class VideogameStoreGUI {
@@ -90,6 +96,36 @@ public class VideogameStoreGUI {
 	@FXML
 	private TextField txtIdClient;
 
+	@FXML
+	private BorderPane screenAddGame;
+
+	@FXML
+	private TextField txtGameCode;
+
+	@FXML
+	private TextField txtGamePrice;
+
+	@FXML
+	private TextField txtShelfGame;
+
+	@FXML
+	private TextField txtExemplarGames;
+
+	@FXML
+	private TableView<?> tvGames;
+
+	@FXML
+	private TableColumn<?, ?> tcIdentifier;
+
+	@FXML
+	private TableColumn<?, ?> tcCode;
+
+	@FXML
+	private TableColumn<?, ?> tcPrice;
+
+	@FXML
+	private TableColumn<?, ?> tcExamplarGames;
+
 
 	public VideogameStoreGUI(VideogameStore v) {
 		videogame = v;
@@ -155,11 +191,12 @@ public class VideogameStoreGUI {
 				mainPane.getChildren().clear();
 				mainPane.setCenter(menuPane);
 				mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+				initializeTableViewOfGames();
 			}catch(NumberFormatException num) {
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setTitle("Error de validacion");
 				alert1.setHeaderText(null);
-				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados");
+				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
 				alert1.showAndWait();
 			}
 		}else {
@@ -193,8 +230,38 @@ public class VideogameStoreGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
-		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-
+		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");	
+	}
+	
+	private void initializeTableViewOfGames() {
+		ObservableList<Videogame> observableList;
+		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		tvGames.setItems(observableList);
+		tcIdentifier.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Shelf"));
+		tcCode.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Code"));
+		tcPrice.setCellValueFactory(new PropertyValueFactory<Videogame, Double>("Price"));
+		tcExamplarGames.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Amount"));
+	}
+	
+	@FXML
+	public void buttonAddGame(ActionEvent event) {
+		if(!txtGameCode.getText().equals("") && !txtGamePrice.getText().equals("") && !txtShelfGame.getText().equals("") && !txtExemplarGames.getText().equals("")) {
+			Alert alert1 = new Alert(AlertType.INFORMATION);
+			alert1.setTitle("Error de validacion");
+			alert1.setHeaderText(null);
+			try {
+				videogame.createGame(txtGameCode.getText(), txtGamePrice.getText(), txtShelfGame.getText().toUpperCase().charAt(0), txtExemplarGames.getText());
+			}catch(NumberFormatException num) {
+				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
+				alert1.showAndWait();
+			}catch(NegativeValueException value) {
+				alert1.setContentText(value.getMessage());
+				alert1.showAndWait();
+			}
+		}else {
+			showValidationErrorAlert();
+		}
+		initializeTableViewOfGames();
 	}
 
 	@FXML
@@ -206,10 +273,6 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-
-	}
-	@FXML
-	public void buttonAddGame(ActionEvent event) {
 
 	}
 
@@ -233,5 +296,5 @@ public class VideogameStoreGUI {
 		alert.setContentText("Recuerde diligenciar cada uno de los campos");
 		alert.showAndWait();
 	}
-	
+
 }
