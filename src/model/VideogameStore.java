@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import exceptions.NegativeValueException;
 import javafx.util.Callback;
 
@@ -35,7 +37,7 @@ public class VideogameStore {
 			throw new NegativeValueException(amount);
 		}
 		if(correct) {
-			Videogame vg = new Videogame(code, price, indicator, amount);
+			Videogame vg = new Videogame(code, price, shelf, amount);
 		}
 	}
 
