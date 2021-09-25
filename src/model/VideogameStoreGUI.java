@@ -57,15 +57,36 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private TableColumn<?, ?> basketCol;
-	
-    @FXML
-    private TableView<?> tvS4;
 
-    @FXML
-    private TableColumn<?, ?> bagCol;
+	@FXML
+	private TableView<?> tvS4;
 
-    @FXML
-    private TableColumn<?, ?> totalpriceCol;
+	@FXML
+	private TableColumn<?, ?> bagCol;
+
+	@FXML
+	private TableColumn<?, ?> totalpriceCol;
+
+	@FXML
+	private BorderPane screenAddGameToClient;
+
+	@FXML
+	private TableView<?> tvClientlList;
+
+	@FXML
+	private TableColumn<?, ?> tcIdClient;
+
+	@FXML
+	private TableColumn<?, ?> tcGamesList;
+
+	@FXML
+	private TableView<?> tvGameslist;
+
+	@FXML
+	private TableColumn<?, ?> tcGames;
+
+	@FXML
+	private TextField txtIdClient;
 
 
 	public VideogameStoreGUI(VideogameStore v) {
@@ -90,26 +111,26 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 	}
-        
-        @FXML
-        public void nextScreenAddGameToClient(ActionEvent event) throws IOException {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addGameToClient.fxml"));
-            fxmlLoader.setController(this);
-            Parent menuPane = fxmlLoader.load();
-            mainPane.getChildren().clear();
-            mainPane.setCenter(menuPane);
-            mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-        }
-        
-        @FXML
-        public void nextScreenSection2(ActionEvent event) throws IOException {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("section2.fxml"));
-            fxmlLoader.setController(this);
-            Parent menuPane = fxmlLoader.load();
-            mainPane.getChildren().clear();
-            mainPane.setCenter(menuPane);
-            mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-        }
+
+	@FXML
+	public void nextScreenAddGameToClient(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addGameToClient.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(menuPane);
+		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+	}
+
+	@FXML
+	public void nextScreenSection2(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/section2.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(menuPane);
+		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+	}
 
 	@FXML
 	public void goToSection3(ActionEvent event) throws IOException {
@@ -131,10 +152,10 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 	}
-		
+
 
 	@FXML
-    public void goToSection4(ActionEvent event) throws IOException {
+	public void goToSection4(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/section4.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
@@ -160,10 +181,10 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 
-    }
-	
+	}
+
 	@FXML
-    public void goToEndingScreen(ActionEvent event) throws IOException {
+	public void goToEndingScreen(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/ending.fxml"));
 
 		fxmlLoader.setController(this);
@@ -172,6 +193,24 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 
-    }
+	}
+	@FXML
+	public void buttonAddGame(ActionEvent event) {
+
+	}
+
+
+
+
+	@FXML
+	public void addGametoclient(ActionEvent event) {
+
+	}
+
+	@FXML
+	public void buttonAddclient(ActionEvent event) {
+
+	}
+
 
 }
