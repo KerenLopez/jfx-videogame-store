@@ -3,14 +3,18 @@ package dataStructures;
 import java.util.ArrayList;
 
 public class HashTable<K,V> implements IHashTable<K,V> {
-	int size;
-	ArrayList<Slot<K,V>> hashTable;
+	private int size;
+	private ArrayList<Slot<K,V>> hashTable;
 
 	public HashTable(int s) {
 		size=s;
 		hashTable=new ArrayList<>(size);
 	}
-
+	
+	public int getSize() {
+		return size;
+	}
+	
 	@Override
 	public V search(K key) {
 		V searched=null;
@@ -24,7 +28,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<size && searched==null);
 
 		return searched;
 	}
@@ -37,6 +41,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			int h=h(i,hf);
 			if(hashTable.get(h)==null) {
 				hashTable.add(h, new Slot<>(key,value));
+				i=Integer.MAX_VALUE;
 
 			}else {
 				i++;
@@ -59,7 +64,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<size && !deleted);
 
 		
 		return deleted;
@@ -84,5 +89,22 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 		hf=hf%size;
 
 		return hf;
+	}
+
+	@Override
+	public void replace(K key, V value) {
+		int i=0;
+		int hf=hFunction(key);
+
+		int h=h(i,hf);
+		do {
+			if(hashTable.get(h)!=null && hashTable.get(h).getKey()==key) {
+				hashTable.get(h).setValue(value);
+				i=Integer.MAX_VALUE;
+			}else {
+				i++;
+			}
+		}while(i<size);
+		
 	}
 }
