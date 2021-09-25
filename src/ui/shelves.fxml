@@ -64,7 +64,7 @@
                      </children>
                   </GridPane>
                   <Button mnemonicParsing="false" onAction="#add" text="Agregar" />
-                  <Button mnemonicParsing="false" onAction="#nextScreen" prefHeight="34.0" prefWidth="77.0" text="Siguiente">
+                  <Button mnemonicParsing="false" onAction="#nextAddGame" prefHeight="34.0" prefWidth="77.0" text="Siguiente">
                      <VBox.margin>
                         <Insets top="30.0" />
                      </VBox.margin>
