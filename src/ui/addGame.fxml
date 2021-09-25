@@ -14,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="buttonAddGame" layoutX="530.0" layoutY="74.0" mnemonicParsing="false" text="Añadir Juego">
+      <Button layoutX="530.0" layoutY="74.0" mnemonicParsing="false" onAction="#buttonAddGame" text="Añadir Juego">
          <font>
             <Font name="Impact" size="20.0" />
          </font>
@@ -69,7 +69,7 @@
             </TableView>
          </center>
       </BorderPane>
-      <Button layoutX="620.0" layoutY="471.0" mnemonicParsing="false" onAction="#nextScreen" text="Siguiente">
+      <Button layoutX="620.0" layoutY="471.0" mnemonicParsing="false" onAction="#nextScreenAddGameToClient" text="Siguiente">
          <font>
             <Font name="Impact" size="20.0" />
          </font>

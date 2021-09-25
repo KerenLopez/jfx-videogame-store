@@ -18,7 +18,7 @@
       </Label>
    </top>
    <center>
-      <Button mnemonicParsing="false" onAction="#nextScreen" text="Iniciar simulacion" BorderPane.alignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#startSimulation" text="Iniciar simulacion" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="50.0" />
          </BorderPane.margin>

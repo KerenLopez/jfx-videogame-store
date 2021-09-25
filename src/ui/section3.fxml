@@ -23,7 +23,7 @@
       </TableView>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#nextScreen" text="Siguiente" BorderPane.alignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#goToSection4" text="Siguiente" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="20.0" />
          </BorderPane.margin>

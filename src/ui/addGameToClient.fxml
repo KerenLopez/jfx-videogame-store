@@ -60,17 +60,17 @@
             <TextField fx:id="txtIdClient" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="buttonAddclient" layoutX="150.0" layoutY="107.0" mnemonicParsing="false" text="Agregar Cliente">
+      <Button layoutX="150.0" layoutY="107.0" mnemonicParsing="false" onAction="#buttonAddclient" text="Agregar Cliente">
          <font>
             <Font name="Impact" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="addGametoclient" layoutX="209.0" layoutY="193.0" mnemonicParsing="false" text="Agregar Juego">
+      <Button layoutX="209.0" layoutY="193.0" mnemonicParsing="false" onAction="#addGametoclient" text="Agregar Juego">
          <font>
             <Font name="Impact" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="724.0" layoutY="507.0" mnemonicParsing="false" onAction="#nextScreen" text="Siguiente">
+      <Button layoutX="724.0" layoutY="507.0" mnemonicParsing="false" onAction="#nextScreenSection2" text="Siguiente">
          <font>
             <Font name="Impact" size="20.0" />
          </font>
