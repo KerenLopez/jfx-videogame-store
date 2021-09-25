@@ -1,8 +1,8 @@
 package dataStructures;
 
 public class Slot<K,V> {
-	private K key;
-	private V value;
+	K key;
+	V value;
 	
 	public Slot(K k, V v) {
 		key=k;

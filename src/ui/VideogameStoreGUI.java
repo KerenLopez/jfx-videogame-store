@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import model.Videogame;
@@ -103,12 +104,15 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private TextField txtGameCode;
+	
+    @FXML
+    private TextField txtShelfGame;
 
 	@FXML
 	private TextField txtGamePrice;
-
+	
 	@FXML
-	private TextField txtShelfGame;
+    private ComboBox<Character> cbShelfs;
 
 	@FXML
 	private TextField txtExemplarGames;
@@ -283,7 +287,7 @@ public class VideogameStoreGUI {
 			alert1.setTitle("Error de validacion");
 			alert1.setHeaderText(null);
 			try {
-				videogame.createGame(txtGameCode.getText(), txtGamePrice.getText(), txtShelfGame.getText().toUpperCase().charAt(0), txtExemplarGames.getText());
+				videogame.addGame(txtGameCode.getText(), txtGamePrice.getText(), txtShelfGame.getText().toUpperCase().charAt(0), txtExemplarGames.getText());
 			}catch(NumberFormatException num) {
 				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
 				alert1.showAndWait();
