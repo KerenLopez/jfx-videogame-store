@@ -10,6 +10,7 @@ public class VideogameStore {
 
 	private Client[] cashiers;
 	private ShelvesHT shelves;
+        private Client client;
 
 	public VideogameStore() {
 		clients = new ArrayList<>();
@@ -109,7 +110,6 @@ public class VideogameStore {
 	//if(shelves.getShelves().search(i).slotsAvailable()) {
 
 	public ArrayList<Character> returnShelvesInd(){
-		
 		return shelves.returnShelvesInd();
 	}
 
@@ -128,8 +128,8 @@ public class VideogameStore {
 		boolean finish=true;
 		for(int i=0;i<clients.size() && finish;i++){
 			if(clients.get(i).getId().equals(ID)){
-				finish=false;
 				foundClientID=clients.get(i);
+                                finish=false;
 			} 
 		}
 		return foundClientID;
@@ -147,10 +147,17 @@ public class VideogameStore {
 		return message;
 	}
 
-	public String addGameToClient(int gameCode){
-		return null;
-
+	public String addGameToClient(Videogame game,Client clientId){
+            String message="Juego agregado exitosamente al cliente";
+            
+            if(clientId.searchGame(game)==false){
+                clientId.getGameList().add(game);
+                game.setAmount(game.getAmount()-1);
+                System.out.print("Hola");
+            }
+            else{
+                message="Lo siento, este juego ya lo agrego el cliente";
+            }
+            return message;
 	}
-
-
 }

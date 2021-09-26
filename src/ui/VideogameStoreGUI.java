@@ -81,7 +81,7 @@ public class VideogameStoreGUI {
 	private BorderPane screenAddGameToClient;
 
 	@FXML
-	private TableView<Client> tvClientlList;
+	private TableView<Client> tvClientList;
 
 	@FXML
 	private TableColumn<Client, String> tcIdClient;
@@ -93,7 +93,7 @@ public class VideogameStoreGUI {
 	private TableView<Videogame> tvGameslist;
 
 	@FXML
-	private TableColumn<Videogame, String> tcGames;
+	private TableColumn<Videogame, Integer> tcGames;
 
 	@FXML
 	private TextField txtIdClient;
@@ -142,6 +142,9 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private RadioButton rbSelection;
+        
+        @FXML
+        private ComboBox<Client> comboxClients;
 
 	public VideogameStoreGUI(VideogameStore v) {
 		videogame = v;
@@ -150,8 +153,8 @@ public class VideogameStoreGUI {
 	private void initializeClientsTableView() {
 		ObservableList<Client> observableList;
 		observableList = FXCollections.observableArrayList(videogame.getClients());
-		tvClientlList.setItems(observableList);
-		tcIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+		tvClientList.setItems(observableList);
+		tcIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
 		tcGamesList.setCellValueFactory(new PropertyValueFactory<Client, String>("StringGameList"));
 	}
 
@@ -159,7 +162,7 @@ public class VideogameStoreGUI {
 		ObservableList<Videogame> observableList;
 		observableList = FXCollections.observableArrayList(videogame.returnGames());
 		tvGameslist.setItems(observableList);
-		tcGames.setCellValueFactory(new PropertyValueFactory<Videogame, String>("Code"));
+		tcGames.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Code"));
 		tvGameslist.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
@@ -239,7 +242,7 @@ public class VideogameStoreGUI {
 						Alert alert1 = new Alert(AlertType.INFORMATION);
 						alert1.setTitle("Error");
 						alert1.setHeaderText(null);
-						alert1.setContentText("El número de estanterías no puede ser mayor que 26");
+						alert1.setContentText("El numero de estanterias no puede ser mayor que 26");
 						alert1.showAndWait();
 					}else {
 						videogame.initCashiersNShelves(nCashiers, nShelves);
@@ -269,8 +272,7 @@ public class VideogameStoreGUI {
 	}
 
 	private void initializeComboBoxShelfInd() {
-		ObservableList<Character> options = 
-				FXCollections.observableArrayList(videogame.returnShelvesInd());
+		ObservableList<Character> options =FXCollections.observableArrayList(videogame.returnShelvesInd());
 		cbShelfInd.setItems(options);
 	}
 
@@ -295,7 +297,7 @@ public class VideogameStoreGUI {
 				Alert alert2 = new Alert(AlertType.INFORMATION);
 				alert2.setTitle("Informacion");
 				alert2.setHeaderText(null);
-				alert2.setContentText("Se le ha dado un número de juegos a la estantería seleccionada");
+				alert2.setContentText("Se le ha dado un numero de juegos a la estanteria seleccionada");
 				alert2.showAndWait();
 
 				txtNumVideogames.clear();
@@ -327,14 +329,13 @@ public class VideogameStoreGUI {
 			Alert alert1 = new Alert(AlertType.ERROR);
 			alert1.setTitle("Error");
 			alert1.setHeaderText(null);
-			alert1.setContentText("Debe darle un número de juegos a todas las estanterías");
+			alert1.setContentText("Debe darle un numero de juegos a todas las estanterias");
 			alert1.showAndWait();
 		}
 	}
 
 	private void initializeComboBoxShelfs() {
-		ObservableList<Character> options = 
-				FXCollections.observableArrayList(videogame.returnShelfs());
+		ObservableList<Character> options = FXCollections.observableArrayList(videogame.returnShelfs());
 		cbShelfs.setItems(options);
 	}
 
@@ -387,11 +388,14 @@ public class VideogameStoreGUI {
 			mainPane.getChildren().clear();
 			mainPane.setCenter(menuPane);
 			mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+                        
+                        initializeGamesCatalogueTableView();
+                        initializeClientsTableView();
 		}else {
 			Alert alert1 = new Alert(AlertType.ERROR);
 			alert1.setTitle("Error");
 			alert1.setHeaderText(null);
-			alert1.setContentText("Debe terminar de agregar los juegos en las estanterías");
+			alert1.setContentText("Debe terminar de agregar los juegos en las estanterias");
 			alert1.showAndWait();
 		}
 	}
@@ -436,48 +440,64 @@ public class VideogameStoreGUI {
        }
 
        @FXML
-       public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
-           Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
-           if(selectGameInCatalogue!=null){
-               btAddGameToClient.setDisable(false);
-           }
-       }
+        public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
+            Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
+            String clientID = comboxClients.getValue().toString();
+            Client client=videogame.findClientID(clientID);
+            if(selectGameInCatalogue!=null && client!=null){
+                btAddGameToClient.setDisable(false);
+            }
+        }
 
 	@FXML
 	public void addGametoclient(ActionEvent event) {
-           Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
-           videogame.addGameToClient(selectGameInCatalogue.getCode());
-           
-           Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setTitle("Informacion");
-           alert.setHeaderText(null);
-           alert.setContentText("El juego se agrego exitosamente al cliente");
-           alert.showAndWait();
-           
-           btAddGameToClient.setDisable(true);
-           initializeClientsTableView();
+            Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
+            Client clientID = comboxClients.getValue();
+            if(clientID!=null){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informacion");
+                alert.setHeaderText(null);
+                alert.setContentText(videogame.addGameToClient(selectGameInCatalogue,clientID));
+                alert.showAndWait();
+                btAddGameToClient.setDisable(true);
+                tvClientList.getItems().clear();
+                initializeClientsTableView();
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Por favor escoger un cliente");
+                alert.showAndWait();
+            }
 	}
 	
 	@FXML
 	public void buttonAddclient(ActionEvent event) {
 		 String strSort = getRadioButtonSortsAlgorithm();
+                 String message="";
          if(!txtIdClient.getText().equals("") && strSort!="no"){
              Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
              alert.setTitle("Confirmacion de registro");
              alert.setHeaderText("Mensaje de confirmacion");
-             alert.setContentText("Â¿Estas seguro de confirmar esta informacion?");
+             alert.setContentText("¿Estas seguro de confirmar esta informacion?");
              Optional<ButtonType> result = alert.showAndWait();
 
              if (result.get() == ButtonType.OK){
+                 message=videogame.addClient(txtIdClient.getText(), strSort);
                  txtIdClient.setText("");
-                 alert.setContentText(videogame.addClient(txtIdClient.getText(), strSort));
+                 alert.setContentText(message);
+                 alert.showAndWait();
+                 initializeClientsTableView();
+                 ObservableList<Client> observableComboBoxClients= FXCollections.observableArrayList(videogame.getClients());
+                 comboxClients.setItems(observableComboBoxClients);
              }
          }
          else {
              Alert alert = new Alert(Alert.AlertType.WARNING);
              alert.setTitle("Error de registro");
              alert.setHeaderText("Mensaje de advertencia");
-             alert.setContentText("Â¡Por favor llene todos los campos que se le solicitan!");
+             alert.setContentText("¡Por favor llene todos los campos que se le solicitan!");
              alert.showAndWait();
          }
 	}
@@ -492,7 +512,7 @@ public class VideogameStoreGUI {
 
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		alert.setContentText("Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
