@@ -1,21 +1,21 @@
 
 package dataStructures;
 
-public class queueNode <T> {
+public class QueueNode <T> {
     
     private T person;
-    private queueNode<T> lastPerson;
+    private QueueNode<T> lastPerson;
 
-    public queueNode(T p) {
+    public QueueNode(T p) {
         p = person;
         lastPerson = null;
     }
 
-    public queueNode<T> getLastPerson() {
+    public QueueNode<T> getLastPerson() {
         return lastPerson;
     }
 
-    public void setLastPerson(queueNode<T> lp) {
+    public void setLastPerson(QueueNode<T> lp) {
         lp = lastPerson;
     }
 

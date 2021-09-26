@@ -79,13 +79,13 @@ public class VideogameStore {
 		return founded;
 	}
 	
-	public void saveGamesInbaskets() {
+	public void saveGamesInbasket() {
 		for(int k=0;k<clients.size();k++) {
 			clients.get(k).saveGamesInBasket();
 		}
 	}
 	
-	public void saveGamesInbags() {
+	public void saveGamesInbag() {
 		for(int k=0;k<clients.size();k++) {
 			clients.get(k).saveGamesInBag();
 		}
