@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="screenAddGameToClient" prefHeight="614.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="844.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane layoutX="485.0" layoutY="44.0" prefHeight="314.0" prefWidth="331.0">
+               <center>
+                  <TableView fx:id="tvClientlList" prefHeight="314.0" prefWidth="331.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="tcIdClient" prefWidth="136.0" text="Cedula" />
+                      <TableColumn fx:id="tcGamesList" prefWidth="193.0" text="Listado de juegos" />
+                    </columns>
+                  </TableView>
+               </center>
+            </BorderPane>
+            <BorderPane layoutX="21.0" layoutY="261.0" prefHeight="314.0" prefWidth="341.0">
+               <center>
+                  <TableView fx:id="tvGameslist" onMouseClicked="#clickOnTableViewOfAddGameToClient" prefHeight="251.0" prefWidth="268.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="tcGames" prefWidth="340.0" text="Catalogo de juego" />
+                    </columns>
+                  </TableView>
+               </center>
+            </BorderPane>
+            <Label layoutX="557.0" layoutY="-5.0" text="Listado de los clientes">
+               <font>
+                  <Font name="Juice ITC" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="130.0" text="Catalogo de juegos">
+               <font>
+                  <Font name="Juice ITC" size="30.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="21.0" layoutY="-27.0" prefHeight="124.0" prefWidth="442.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Cedula del cliente">
+                     <font>
+                        <Font name="Juice ITC" size="30.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtIdClient" prefHeight="25.0" prefWidth="241.0" GridPane.columnIndex="1" />
+                  <VBox prefHeight="78.0" prefWidth="338.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="231.0" text="¿Como le gustaria ordenar sus juegos?">
+                           <font>
+                              <Font name="Juice ITC" size="20.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbInsertion" mnemonicParsing="false" onAction="#getRadioButtonSortsAlgorithm" text="Insercion">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="sortsAlgorithm" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbSelection" mnemonicParsing="false" onAction="#getRadioButtonSortsAlgorithm" text="Seleccion" toggleGroup="$sortsAlgorithm">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#buttonAddclient" text="Agregar Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Impact" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </GridPane>
+            <Button fx:id="btAddGameToClient" disable="true" layoutX="120.0" layoutY="214.0" mnemonicParsing="false" onAction="#addGametoclient" text="Agregar Juego">
+               <font>
+                  <Font name="Impact" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="724.0" layoutY="507.0" mnemonicParsing="false" onAction="#nextScreenSection2" text="Siguiente">
+               <font>
+                  <Font name="Impact" size="20.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="comboxClients" layoutX="204.0" layoutY="176.0" prefWidth="150.0" />
+            <Label layoutX="35.0" layoutY="169.0" prefHeight="39.0" prefWidth="171.0" text="Seleccionar cliente">
+               <font>
+                  <Font name="Juice ITC" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
