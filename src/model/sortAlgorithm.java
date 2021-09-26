@@ -1,6 +1,6 @@
 
 package model;
 
-public enum sortAlgorithm {
+public enum SortAlgorithm {
     INSERTION, SELECTION;
 }

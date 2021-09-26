@@ -79,6 +79,29 @@ public class VideogameStore {
 		return founded;
 	}
 	
+	public void saveGamesInbaskets() {
+		for(int k=0;k<clients.size();k++) {
+			clients.get(k).saveGamesInBasket();
+		}
+	}
+	
+	public void saveGamesInbags() {
+		for(int k=0;k<clients.size();k++) {
+			clients.get(k).saveGamesInBag();
+		}
+	}
+	
+	public void orderClientsListsOfGames() {
+		for(int k=0;k<clients.size();k++) {
+			clients.get(k).setTimeUnit((clients.get(k).getTimeUnit())+1);
+			if(clients.get(k).getSort().equals(SortAlgorithm.INSERTION)) {
+				clients.get(k).orderListByInsertion();
+			}else {
+				clients.get(k).orderListBySelection();
+			}
+		}
+	}
+
 	public ArrayList<Videogame> returnGames() {
 		ArrayList<Videogame> videogames=shelves.returnGamesCatalog();
 		return videogames;
@@ -143,6 +166,6 @@ public class VideogameStore {
 		return null;
 
 	}
-	
-	
+
+
 }
