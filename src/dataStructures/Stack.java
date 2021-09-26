@@ -13,22 +13,22 @@ public class Stack <T> implements IStack<T>{
 	@Override
 	public void push(T element) {
 		NodeS<T> newNode = new NodeS<T>(element);
-		size++;
-		if(size>1) {
+		if(!isEmpty()) {
 			newNode.setPrevious(topNode);
-			topNode = newNode;
 		}
+		topNode = newNode;
+		size++;
 	}
 
 	@Override
 	public T pop() {
-		T savedElement = topNode.getElement();
-		if(!isEmpty()) {
-			savedElement = null;
-		}else if(size==1){
+		T savedElement = null;
+		if(size==1){
+			savedElement = topNode.getElement();
 			topNode = null;
 			size--;
-		}else {
+		}else if(size>1){
+			savedElement = topNode.getElement();
 			topNode = topNode.getPrevious();
 			size--;
 		}
@@ -37,9 +37,9 @@ public class Stack <T> implements IStack<T>{
 
 	@Override
 	public T top() {
-		T savedElement = topNode.getElement();
-		if(isEmpty()) {
-			savedElement = null;
+		T savedElement = null;
+		if(!isEmpty()) {
+			savedElement = topNode.getElement();
 		}
 		return savedElement;
 	}
@@ -53,4 +53,7 @@ public class Stack <T> implements IStack<T>{
 		return empty;
 	}
 
+	public int getSize() {
+		return size;
+	}
 }
