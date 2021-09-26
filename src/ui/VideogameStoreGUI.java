@@ -43,14 +43,6 @@ public class VideogameStoreGUI {
 	@FXML
 	private TextField txtNumVideogames;
 
-	@FXML
-	private TableView<?> tvShelves;
-
-	@FXML
-	private TableColumn<?, ?> colIndicator;
-
-	@FXML
-	private TableColumn<?, ?> colNumVideogames;
 
 	@FXML
 	private TableView<Client> tvS2;
@@ -224,8 +216,9 @@ public class VideogameStoreGUI {
 						mainPane.getChildren().clear();
 						mainPane.setCenter(menuPane);
 						mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-
+						
 						initializeComboBoxShelfInd();
+						
 					}
 
 				}catch(NumberFormatException num) {
@@ -321,6 +314,12 @@ public class VideogameStoreGUI {
 			try {
 				videogame.addGame(txtGameCode.getText(), txtGamePrice.getText(), cbShelfs.getValue(), txtExemplarGames.getText());
 				initializeTableViewOfGames();
+				
+				txtGameCode.clear();
+				txtGamePrice.clear();
+				txtExemplarGames.clear();
+				cbShelfs.getItems().clear();
+				initializeComboBoxShelfs();
 			}catch(NumberFormatException num) {
 				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
 				alert1.showAndWait();
