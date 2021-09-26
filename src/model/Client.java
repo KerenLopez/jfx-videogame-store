@@ -52,6 +52,12 @@ public class Client {
 			shoppingBag.push(shoppingBasket.pop());
 		}
 	}
+        
+        public ArrayList<String> returnIDClients(){
+		ArrayList<String> IDClients=new ArrayList<>();
+                IDClients.add(id);
+		return IDClients;
+	}
 
 	public String getId() {
 		return id;
@@ -88,9 +94,19 @@ public class Client {
 	public String getStringGameList() {
 		String list = "";
 		for(int k=0; k<gameList.size();k++) {
-			list += gameList.get(k).getCode()+"/n";
+			list += gameList.get(k).getCode()+"\n";
 		}
 		return list;
+	}
+        
+        public boolean searchGame(Videogame game) {
+		boolean founded = false;
+		for(int k=0;k<gameList.size() && !founded;k++) {
+			if(gameList.get(k).getCode()==game.getCode()){
+				founded = true;
+			}
+		}
+		return founded;
 	}
 	
 	public ArrayList<Videogame> getGameList() {
@@ -138,4 +154,9 @@ public class Client {
 			gameList.set(i,gameList.get(i));
 		}
 	}
+        
+        @Override
+        public String toString() {
+        return id;
+        }
 }
