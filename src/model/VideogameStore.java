@@ -153,7 +153,6 @@ public class VideogameStore {
             if(clientId.searchGame(game)==false){
                 clientId.getGameList().add(game);
                 game.setAmount(game.getAmount()-1);
-                System.out.print("Hola");
             }
             else{
                 message="Lo siento, este juego ya lo agrego el cliente";
