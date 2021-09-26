@@ -9,13 +9,16 @@ public class Client {
     
     private String id;
     private String listCode;
+    private String basketOrder;
+    private String bagOrder;
     private double purchaseValue;
+	private sortAlgorithm sort;
     private int timeUnit;
     private ArrayList<Videogame> gameList;
     private Stack<Videogame> shoppingBag;
     private Stack<Videogame> shoppingBasket;
 
-    public Client(String id) {
+    public Client(String id, String sort) {
         this.id = id;
         listCode=null;
         purchaseValue=0;
@@ -23,23 +26,30 @@ public class Client {
         gameList = new ArrayList<Videogame>();
         shoppingBag = new Stack<Videogame>();
         shoppingBasket = new Stack<Videogame>();
+        basketOrder="";
+        bagOrder="";
+	if(sort.equalsIgnoreCase("INSERTION")) {
+            this.sort = sortAlgorithm.INSERTION;
+        }
+        else {
+            this.sort = sortAlgorithm.SELECTION;
+        }
     }
     
     public void saveGamesInBasket(ArrayList<Videogame> games) {
     	for (int k=0;k<games.size();k++) {
+    		basketOrder += ""+games.get(k).getCode()+"/n";
     		shoppingBasket.push(games.get(k));
     		timeUnit++;
     	}
     }
     
-    public String saveGamesInBag() {
-    	String order = "";
+    public void saveGamesInBag() {
     	while(!shoppingBasket.isEmpty()) {
-    		order += shoppingBasket.top().getCode();
+    		bagOrder = getBagOrder() + shoppingBasket.top().getCode()+"/n";
     		purchaseValue = getPurchaseValue()+(shoppingBasket.top().getPrice());
     		shoppingBag.push(shoppingBasket.pop());
     	}
-		return order;
     }
 
     public String getId() {
@@ -81,4 +91,20 @@ public class Client {
 		}
 		return list;
 	}
+
+	public String getBasketOrder() {
+		return basketOrder;
+	}
+
+	public String getBagOrder() {
+		return bagOrder;
+	}
+
+	public sortAlgorithm getSort() {
+        	return sort;
+    	}
+
+    	public void setSort(sortAlgorithm sort) {
+        	this.sort = sort;
+    	}
 }
