@@ -3,6 +3,7 @@ package ui;
 import java.io.IOException;
 import java.util.Optional;
 
+import exceptions.CodeLengthException;
 import exceptions.NegativeValueException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import model.Client;
 import model.Videogame;
 import model.VideogameStore;
 
@@ -39,7 +41,6 @@ public class VideogameStoreGUI {
 	@FXML
 	private ComboBox<Character> cbShelfInd;
 
-
 	@FXML
 	private TextField txtNumVideogames;
 
@@ -53,31 +54,31 @@ public class VideogameStoreGUI {
 	private TableColumn<?, ?> colNumVideogames;
 
 	@FXML
-	private TableView<?> tvS2;
+	private TableView<Client> tvS2;
 
 	@FXML
-	private TableColumn<?, ?> idCol;
+	private TableColumn<Client, String> idCol;
 
 	@FXML
-	private TableColumn<?, ?> listgamesCol;
+	private TableColumn<Client, String> listgamesCol;
 
 	@FXML
-	private TableColumn<?, ?> timeCol;
+	private TableColumn<Client, Integer> timeCol;
 
 	@FXML
-	private TableView<?> tvS3;
+	private TableView<Client> tvS3;
 
 	@FXML
-	private TableColumn<?, ?> basketCol;
+	private TableColumn<Client, String> basketCol;
 
 	@FXML
-	private TableView<?> tvS4;
+	private TableView<Client> tvS4;
 
 	@FXML
-	private TableColumn<?, ?> bagCol;
+	private TableColumn<Client, String> bagCol;
 
 	@FXML
-	private TableColumn<?, ?> totalpriceCol;
+	private TableColumn<Client, Double> totalpriceCol;
 
 	@FXML
 	private BorderPane screenAddGameToClient;
@@ -159,12 +160,12 @@ public class VideogameStoreGUI {
 
 
 	private void initializeTableViewS2() {
-		ObservableList<Videogame> observableList;
-		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		ObservableList<Client> observableList;
+		observableList = FXCollections.observableArrayList(videogame.getClients());
 		tvS2.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
 		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
-		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("time"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("TimeUnit"));
 	}
 
 	@FXML
@@ -179,13 +180,13 @@ public class VideogameStoreGUI {
 	}
 
 	private void initializeTableViewS3() {
-		ObservableList<Videogame> observableList;
-		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		ObservableList<Client> observableList;
+		observableList = FXCollections.observableArrayList(videogame.getClients());
 		tvS2.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
 		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
-		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("time"));
-		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("TimeUnit"));
+		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("BasketOrder"));
 	}
 
 	@FXML
@@ -248,11 +249,11 @@ public class VideogameStoreGUI {
 
 
 	private void initializeTableViewS4() {
-		ObservableList<Videogame> observableList;
-		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		ObservableList<Client> observableList;
+		observableList = FXCollections.observableArrayList(videogame.getClients());
 		tvS2.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
-		bagCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		bagCol.setCellValueFactory(new PropertyValueFactory<Client, String>("BagOrder"));
 		totalpriceCol.setCellValueFactory(new PropertyValueFactory<Client, Double>("purchaseValue"));
 	}
 
@@ -326,6 +327,9 @@ public class VideogameStoreGUI {
 			}catch(NegativeValueException value) {
 				alert1.setContentText(value.getMessage());
 				alert1.showAndWait();
+			}catch(CodeLengthException c) {
+				alert1.setContentText(c.getMessage());
+				alert1.showAndWait();
 			}
 		}else {
 			showValidationErrorAlert();
@@ -372,7 +376,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-
+		initializeTableViewS4();
 	}
 
 

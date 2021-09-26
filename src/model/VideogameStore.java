@@ -2,20 +2,16 @@ package model;
 
 import java.util.ArrayList;
 
+import exceptions.CodeLengthException;
 import exceptions.NegativeValueException;
-import java.util.List;
 
 public class VideogameStore {
-	private List<Client> clients;
+	private ArrayList<Client> clients;
 
 	private Client[] cashiers;
 	private ShelvesHT shelves;
 
 	public VideogameStore() {
-
-	}
-
-	public ArrayList<Client> returnResultS2() {
 		clients = new ArrayList<>();
 	}
 
@@ -29,24 +25,31 @@ public class VideogameStore {
 	}
 
 
-	public List<Client> getClients() {
+	public ArrayList<Client> getClients() {
 		return clients;
 	}
 
 	public ArrayList<Client> returnResultS3() {
+		return clients;
 
 	}
 
 	public ArrayList<Client> returnResultS4() {
+		return clients;
 
 	}
 
-	public void addGame(String c, String p, char i, String a) throws NegativeValueException {
+	public void addGame(String c, String p, char i, String a) throws NegativeValueException, CodeLengthException {
 		int code = Integer.parseInt(c);
 		double price = Double.parseDouble(p);
 		char shelf = i;
 		int amount = Integer.parseInt(a);
+		boolean founded = searchGame(code);
 		boolean correct = true;
+		if(code<100 || code>999) {
+			correct = false;
+			throw new CodeLengthException(code);
+		}
 		if(code<0) {
 			correct = false;
 			throw new NegativeValueException(code);
@@ -59,17 +62,25 @@ public class VideogameStore {
 			correct = false;
 			throw new NegativeValueException(amount);
 		}
-		if(correct) {
-
+		if(correct && founded==false) {
 			Videogame vg = new Videogame(code, price, shelf, amount);
 			shelves.addGameToShelf(vg);
 		}
 	}
 
-
+	public boolean searchGame(int code) {
+		boolean founded = false;
+		ArrayList<Videogame> videogames=shelves.returnGamesCatalog();
+		for(int k=0;k<videogames.size();k++) {
+			if(videogames.get(k).getCode()==code){
+				founded = true;
+			}
+		}
+		return founded;
+	}
+	
 	public ArrayList<Videogame> returnGames() {
 		ArrayList<Videogame> videogames=shelves.returnGamesCatalog();
-
 		return videogames;
 	}
 	//if(shelves.getShelves().search(i).slotsAvailable()) {
@@ -129,6 +140,9 @@ public class VideogameStore {
 	}
 
 	public String addGameToClient(int gameCode){
+		return null;
 
 	}
+	
+	
 }
