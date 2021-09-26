@@ -112,6 +112,9 @@ public class VideogameStoreGUI {
         @FXML
         private RadioButton rbSelection;
 
+	@FXML
+        private ComboBox<Client> comboxClients;
+
 
 	public VideogameStoreGUI(VideogameStore v) {
 		videogame = v;
@@ -161,6 +164,9 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		ObservableList<Client> observableComboBoxClients= FXCollections.observableArrayList(videogame.getClients());
+                comboxClients.setItems(observableComboBoxClients);
+                initializeGamesCatalogueTableView();
 	}
 
 	@FXML
@@ -280,7 +286,10 @@ public class VideogameStoreGUI {
         @FXML
         public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
             Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
-            if(selectGameInCatalogue!=null){
+            String clientID = comboxClients.getValue().toString();
+            Client client=videogame.findClientID(clientID);
+            if(selectGameInCatalogue!=null && client!=null){
+                
                 btAddGameToClient.setDisable(false);
             }
         }

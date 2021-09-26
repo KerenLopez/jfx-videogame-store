@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -156,7 +155,7 @@ public class VideogameStoreGUI {
 		observableList = FXCollections.observableArrayList(videogame.getClients());
 		tvS2.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
-		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("StringGameList"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("TimeUnit"));
 	}
 
@@ -168,6 +167,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		videogame.orderClientsListsOfGames();
 		initializeTableViewS2();
 	}
 
@@ -176,7 +176,7 @@ public class VideogameStoreGUI {
 		observableList = FXCollections.observableArrayList(videogame.getClients());
 		tvS2.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
-		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("StringGameList"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("TimeUnit"));
 		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("BasketOrder"));
 	}
@@ -189,6 +189,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		videogame.saveGamesInbaskets();
 		initializeTableViewS3();
 	}
 
@@ -304,7 +305,6 @@ public class VideogameStoreGUI {
 		cbShelfs.setItems(options);
 	}
 
-
 	@FXML
 	public void buttonAddGame(ActionEvent event) {
 		if(!txtGameCode.getText().isEmpty() && !txtGamePrice.getText().isEmpty() && cbShelfs.getValue()!=null && !txtExemplarGames.getText().isEmpty()) {
@@ -333,10 +333,7 @@ public class VideogameStoreGUI {
 		}else {
 			showValidationErrorAlert();
 		}
-
 	}
-
-
 
 	private void initializeTableViewOfGames() {
 		ObservableList<Videogame> observableList;
@@ -375,6 +372,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		videogame.saveGamesInbags();
 		initializeTableViewS4();
 	}
 
