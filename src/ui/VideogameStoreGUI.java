@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import exceptions.NegativeValueException;
 import javafx.collections.FXCollections;
@@ -15,10 +16,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import model.Product;
 import model.Videogame;
 import model.VideogameStore;
 
@@ -106,11 +107,13 @@ public class VideogameStoreGUI {
 	private TextField txtGameCode;
 
 	@FXML
+	private TextField txtShelfGame;
+
+	@FXML
 	private TextField txtGamePrice;
 
 	@FXML
 	private ComboBox<Character> cbShelfs;
-
 
 	@FXML
 	private TextField txtExemplarGames;
@@ -175,6 +178,16 @@ public class VideogameStoreGUI {
 		initializeTableViewS2();
 	}
 
+	private void initializeTableViewS3() {
+		ObservableList<Videogame> observableList;
+		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		tvS2.setItems(observableList);
+		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
+		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("time"));
+		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+	}
+
 	@FXML
 	public void goToSection3(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/section3.fxml"));
@@ -183,40 +196,46 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		initializeTableViewS3();
 	}
 
 
 	@FXML
 	public void nextShelves(ActionEvent event) throws IOException {
 		if(!txtNumCashiers.getText().equals("") && !txtNumShelves.getText().equals("")) {
-			try {
-				int nCashiers=Integer.parseInt(txtNumCashiers.getText());
-				int nShelves=Integer.parseInt(txtNumShelves.getText());
-				if(nShelves>26) {
+			Optional<ButtonType> result = askToContinue();
+			if (result.get() == ButtonType.OK){
+				try {
+					int nCashiers=Integer.parseInt(txtNumCashiers.getText());
+					int nShelves=Integer.parseInt(txtNumShelves.getText());
+					if(nShelves>26) {
+						Alert alert1 = new Alert(AlertType.INFORMATION);
+						alert1.setTitle("Error");
+						alert1.setHeaderText(null);
+						alert1.setContentText("El número de estanterías no puede ser mayor que 26");
+						alert1.showAndWait();
+					}else {
+						videogame.initCashiersNShelves(nCashiers, nShelves);
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/shelves.fxml"));
+						fxmlLoader.setController(this);
+						Parent menuPane = fxmlLoader.load();
+						mainPane.getChildren().clear();
+						mainPane.setCenter(menuPane);
+						mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+
+						initializeComboBoxShelfInd();
+					}
+
+				}catch(NumberFormatException num) {
 					Alert alert1 = new Alert(AlertType.INFORMATION);
-					alert1.setTitle("Error");
+					alert1.setTitle("Error de validacion");
 					alert1.setHeaderText(null);
-					alert1.setContentText("El número de estanterías no puede ser mayor que 26");
+					alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
 					alert1.showAndWait();
-				}else {
-					videogame.initCashiersNShelves(nCashiers, nShelves);
 
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/shelves.fxml"));
-					fxmlLoader.setController(this);
-					Parent menuPane = fxmlLoader.load();
-					mainPane.getChildren().clear();
-					mainPane.setCenter(menuPane);
-					mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-					initializeComboBoxShelfInd();
 				}
-
-			}catch(NumberFormatException num) {
-				Alert alert1 = new Alert(AlertType.INFORMATION);
-				alert1.setTitle("Error de validacion");
-				alert1.setHeaderText(null);
-				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
-				alert1.showAndWait();
 			}
+
 		}else {
 			showValidationErrorAlert();
 		}
@@ -229,6 +248,14 @@ public class VideogameStoreGUI {
 	}
 
 
+	private void initializeTableViewS4() {
+		ObservableList<Videogame> observableList;
+		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		tvS2.setItems(observableList);
+		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
+		bagCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
+		totalpriceCol.setCellValueFactory(new PropertyValueFactory<Client, Double>("purchaseValue"));
+	}
 
 
 	@FXML
@@ -362,9 +389,6 @@ public class VideogameStoreGUI {
 
 	}
 
-
-
-
 	@FXML
 	public void addGametoclient(ActionEvent event) {
 
@@ -381,6 +405,13 @@ public class VideogameStoreGUI {
 		alert.setHeaderText(null);
 		alert.setContentText("Recuerde diligenciar cada uno de los campos");
 		alert.showAndWait();
+	}
+
+	public Optional<ButtonType> askToContinue() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setContentText("¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		Optional<ButtonType> result = alert.showAndWait();
+		return result;
 	}
 
 }

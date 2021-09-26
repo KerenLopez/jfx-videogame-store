@@ -9,14 +9,14 @@ public class Client {
     private String listCode;
     private double purchaseValue;
     private int timeUnit;
-    private ArrayList<Videogame> booksCodes;
+    private ArrayList<Videogame> gamesCodes;
 
     public Client(String id) {
         this.id = id;
         listCode=null;
         purchaseValue=0;
         timeUnit=0;
-        booksCodes=new ArrayList<Videogame>();
+        gamesCodes=new ArrayList<Videogame>();
     }
 
     public String getId() {
@@ -51,11 +51,11 @@ public class Client {
         this.timeUnit = timeUnit;
     }
 
-    public ArrayList<Videogame> getBooksCodes() {
-        return booksCodes;
+    public ArrayList<Videogame> getGamesCodes() {
+        return gamesCodes;
     }
 
-    public void setBooksCodes(ArrayList<Videogame> booksCodes) {
-        this.booksCodes = booksCodes;
+    public void setBooksCodes(ArrayList<Videogame> gamesCodes) {
+        this.gamesCodes = gamesCodes;
     }
 }

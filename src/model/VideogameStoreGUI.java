@@ -11,11 +11,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class VideogameStoreGUI {
@@ -94,6 +97,9 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private TextField txtIdClient;
+        
+        @FXML
+        private Button btAddGameToClient;
 
 
 	public VideogameStoreGUI(VideogameStore v) {
@@ -105,14 +111,16 @@ public class VideogameStoreGUI {
             observableList = FXCollections.observableArrayList(videogame.getClients());
             tvClientlList.setItems(observableList);
             tcIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
-            tcGamesList.setCellValueFactory(new PropertyValueFactory<Client, ArrayList>("booksCodes"));
+            tcGamesList.setCellValueFactory(new PropertyValueFactory<Client, ArrayList>("gamesCodes"));
         }
         
         private void initializeGamesCatalogueTableView() {
             ObservableList<Videogame> observableList;
-            observableList = FXCollections.observableArrayList(videogame.getClients());
+            observableList = FXCollections.observableArrayList(videogame.returnGames());
             tvGameslist.setItems(observableList);
             tcGames.setCellValueFactory(new PropertyValueFactory<Videogame, String>("gameName"));
+            
+            tvGameslist.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         }
 
 	public void showWelcomeWindow() throws IOException {
@@ -221,15 +229,7 @@ public class VideogameStoreGUI {
 
 	}
 
-
-
-
-	@FXML
-	public void addGametoclient(ActionEvent event) {
-            
-	}
-
-	@FXML
+        @FXML
 	public void buttonAddclient(ActionEvent event) {
             if(!txtIdClient.getText().equals("")){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -240,6 +240,7 @@ public class VideogameStoreGUI {
 
                 if (result.get() == ButtonType.OK){
                     txtIdClient.setText("");
+                    alert.setContentText(videogame.addClient(txtIdClient.getText()));
                 }
             }
             else {
@@ -249,5 +250,28 @@ public class VideogameStoreGUI {
                 alert.setContentText("¡Por favor llene todos los campos que se le solicitan!");
                 alert.showAndWait();
             }
+	}
+
+        @FXML
+        public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
+            Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
+            if(selectGameInCatalogue!=null){
+                btAddGameToClient.setDisable(false);
+            }
+        }
+
+	@FXML
+	public void addGametoclient(ActionEvent event) {
+            Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
+            videogame.addGameToClient(selectGameInCatalogue.getCode());
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informacion");
+            alert.setHeaderText(null);
+            alert.setContentText("El juego se agrego exitosamente al cliente");
+            alert.showAndWait();
+            
+            btAddGameToClient.setDisable(true);
+            initializeClientsTableView();
 	}
 }
