@@ -37,7 +37,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 		do {
 			int h=h(i,hf);
 			
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
+			if(hashTable[h]!=null && hashTable[h].getKey().equals(key)) {
 				searched=hashTable[h].getValue();
 				i=Integer.MAX_VALUE;
 
@@ -86,7 +86,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 		do {
 			int h=h(i,hf);
 
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
+			if(hashTable[h]!=null && hashTable[h].getKey().equals(key)) {
 				hashTable[h]=null;
 				deleted=true;
 				size--;
@@ -118,7 +118,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 		
 		do {
 			int h=h(i,hf);
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
+			if(hashTable[h]!=null && hashTable[h].getKey().equals(key)) {
 				hashTable[h].setValue(value);
 				i=Integer.MAX_VALUE;
 			}else {
