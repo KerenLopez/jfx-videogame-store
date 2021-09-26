@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane fx:id="screenAddGameToClient" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="844.0">
@@ -29,7 +28,7 @@
             </BorderPane>
             <BorderPane layoutX="21.0" layoutY="237.0" prefHeight="314.0" prefWidth="341.0">
                <center>
-                  <TableView fx:id="tvGameslist" prefHeight="251.0" prefWidth="268.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="tvGameslist" onMouseClicked="#clickOnTableViewOfAddGameToClient" prefHeight="251.0" prefWidth="268.0" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="tcGames" prefWidth="340.0" text="Catalogo de juego" />
                     </columns>
@@ -68,7 +67,7 @@
                   <Font name="Impact" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="209.0" layoutY="193.0" mnemonicParsing="false" onAction="#addGametoclient" text="Agregar Juego">
+            <Button fx:id="btAddGameToClient" disable="true" layoutX="209.0" layoutY="193.0" mnemonicParsing="false" onAction="#addGametoclient" text="Agregar Juego">
                <font>
                   <Font name="Impact" size="20.0" />
                </font>

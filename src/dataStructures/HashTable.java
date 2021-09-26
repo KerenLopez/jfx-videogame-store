@@ -3,14 +3,28 @@ package dataStructures;
 import java.util.ArrayList;
 
 public class HashTable<K,V> implements IHashTable<K,V> {
-	int size;
-	ArrayList<Slot<K,V>> hashTable;
+	private int size;
+	private int maxSize;
+	private ArrayList<Slot<K,V>> hashTable;
 
 	public HashTable(int s) {
-		size=s;
-		hashTable=new ArrayList<>(size);
+		maxSize=s;
+		size=0;
+		hashTable=new ArrayList<>(maxSize);
 	}
-
+	
+	public int getMaxSize() {
+		return maxSize;
+	}
+	
+	public boolean slotsAvailable() {
+		boolean available=false;
+		if(size<maxSize) {
+			available=true;
+		}
+		return available;
+	}
+	
 	@Override
 	public V search(K key) {
 		V searched=null;
@@ -24,7 +38,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<maxSize && searched==null);
 
 		return searched;
 	}
@@ -37,11 +51,13 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			int h=h(i,hf);
 			if(hashTable.get(h)==null) {
 				hashTable.add(h, new Slot<>(key,value));
+				i=Integer.MAX_VALUE;
+				size++;
 
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<maxSize);
 
 	}
 
@@ -56,10 +72,11 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			if(hashTable.get(h)!=null && hashTable.get(h).getKey()==key) {
 				hashTable.set(h,null);
 				deleted=true;
+				size--;
 			}else {
 				i++;
 			}
-		}while(i<size);
+		}while(i<maxSize && !deleted);
 
 		
 		return deleted;
@@ -68,7 +85,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 
 	public int h(int i, int hf) {
 		int hn=0;
-		hn=(hf+i)%size;
+		hn=(hf+i)%maxSize;
 		return hn;
 	}
 
@@ -81,8 +98,35 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 			hf+=Character.getNumericValue(c)*(str.length()-1-j);
 		}
 
-		hf=hf%size;
+		hf=hf%maxSize;
 
 		return hf;
+	}
+
+	@Override
+	public void replace(K key, V value) {
+		int i=0;
+		int hf=hFunction(key);
+
+		int h=h(i,hf);
+		do {
+			if(hashTable.get(h)!=null && hashTable.get(h).getKey()==key) {
+				hashTable.get(h).setValue(value);
+				i=Integer.MAX_VALUE;
+			}else {
+				i++;
+			}
+		}while(i<maxSize);
+		
+	}
+	
+	public ArrayList<V> elements(){
+		ArrayList<V> elem=new ArrayList<>();
+		for(int i=0; i<maxSize;i++) {
+			if(hashTable.get(i)!=null) {
+				elem.add(hashTable.get(i).getValue());
+			}
+		}
+		return elem;
 	}
 }

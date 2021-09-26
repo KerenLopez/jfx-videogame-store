@@ -37,7 +37,8 @@ public class VideogameStoreGUI {
 	private TextField txtNumShelves;
 
 	@FXML
-	private TextField txtIndicator;
+	private ComboBox<Character> cbShelfInd;
+
 
 	@FXML
 	private TextField txtNumVideogames;
@@ -104,33 +105,33 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private TextField txtGameCode;
-	
-    @FXML
-    private TextField txtShelfGame;
+
+	@FXML
+	private TextField txtShelfGame;
 
 	@FXML
 	private TextField txtGamePrice;
-	
+
 	@FXML
-    private ComboBox<Character> cbShelfs;
+	private ComboBox<Character> cbShelfs;
 
 	@FXML
 	private TextField txtExemplarGames;
 
 	@FXML
-	private TableView<?> tvGames;
+	private TableView<Videogame> tvGames;
 
 	@FXML
-	private TableColumn<?, ?> tcIdentifier;
+	private TableColumn<Videogame, Integer> tcIdentifier;
 
 	@FXML
-	private TableColumn<?, ?> tcCode;
+	private TableColumn<Videogame, Integer> tcCode;
 
 	@FXML
-	private TableColumn<?, ?> tcPrice;
+	private TableColumn<Videogame, Double> tcPrice;
 
 	@FXML
-	private TableColumn<?, ?> tcExamplarGames;
+	private TableColumn<Videogame, Integer> tcExamplarGames;
 
 
 	public VideogameStoreGUI(VideogameStore v) {
@@ -156,16 +157,7 @@ public class VideogameStoreGUI {
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 	}
 
-	@FXML
-	public void nextScreenAddGameToClient(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addGameToClient.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.setCenter(menuPane);
-		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-	}
-	
+
 	private void initializeTableViewS2() {
 		ObservableList<Videogame> observableList;
 		observableList = FXCollections.observableArrayList(videogame.returnGames());
@@ -195,7 +187,7 @@ public class VideogameStoreGUI {
 		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("time"));
 		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
 	}
-	
+
 	@FXML
 	public void goToSection3(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/section3.fxml"));
@@ -214,25 +206,46 @@ public class VideogameStoreGUI {
 			Optional<ButtonType> result = askToContinue();
 			if (result.get() == ButtonType.OK){
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/shelves.fxml"));
-					fxmlLoader.setController(this);
-					Parent menuPane = fxmlLoader.load();
-					mainPane.getChildren().clear();
-					mainPane.setCenter(menuPane);
-					mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-					initializeTableViewOfGames();
+					int nCashiers=Integer.parseInt(txtNumCashiers.getText());
+					int nShelves=Integer.parseInt(txtNumShelves.getText());
+					if(nShelves>26) {
+						Alert alert1 = new Alert(AlertType.INFORMATION);
+						alert1.setTitle("Error");
+						alert1.setHeaderText(null);
+						alert1.setContentText("El número de estanterías no puede ser mayor que 26");
+						alert1.showAndWait();
+					}else {
+						videogame.initCashiersNShelves(nCashiers, nShelves);
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/shelves.fxml"));
+						fxmlLoader.setController(this);
+						Parent menuPane = fxmlLoader.load();
+						mainPane.getChildren().clear();
+						mainPane.setCenter(menuPane);
+						mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+
+						initializeComboBoxShelfInd();
+					}
+
 				}catch(NumberFormatException num) {
 					Alert alert1 = new Alert(AlertType.INFORMATION);
 					alert1.setTitle("Error de validacion");
 					alert1.setHeaderText(null);
 					alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
 					alert1.showAndWait();
+
 				}
 			}
 		}else {
 			showValidationErrorAlert();
 		}
 	}
+
+	private void initializeComboBoxShelfInd() {
+		ObservableList<Character> options = 
+				FXCollections.observableArrayList(videogame.returnShelvesInd());
+		cbShelfInd.setItems(options);
+	}
+
 
 	private void initializeTableViewS4() {
 		ObservableList<Videogame> observableList;
@@ -242,6 +255,114 @@ public class VideogameStoreGUI {
 		bagCol.setCellValueFactory(new PropertyValueFactory<Client, String>("ListOfGames"));
 		totalpriceCol.setCellValueFactory(new PropertyValueFactory<Client, Double>("purchaseValue"));
 	}
+
+
+	@FXML
+	public void addNumGameShelf(ActionEvent event) {
+		if(cbShelfInd.getValue()!=null && !txtNumVideogames.getText().isEmpty()) {
+			try {
+				int nVGames=Integer.parseInt(txtNumVideogames.getText());
+				videogame.setNumberGamesShelf(nVGames, cbShelfInd.getValue());
+
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("Se le ha dado un número de juegos a la estantería seleccionada");
+				alert2.showAndWait();
+
+				txtNumVideogames.clear();
+				cbShelfInd.getItems().clear();
+				initializeComboBoxShelfInd();
+
+			}catch(NumberFormatException num){
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
+				alert1.showAndWait();
+			}
+		}
+	}
+
+	@FXML
+	public void nextAddGame(ActionEvent event) throws IOException {
+		if(cbShelfInd.getItems().isEmpty()) {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addGame.fxml"));
+			fxmlLoader.setController(this);
+			Parent menuPane = fxmlLoader.load();
+			mainPane.getChildren().clear();
+			mainPane.setCenter(menuPane);
+			mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");	
+
+			initializeComboBoxShelfs();
+		}else {
+			Alert alert1 = new Alert(AlertType.ERROR);
+			alert1.setTitle("Error");
+			alert1.setHeaderText(null);
+			alert1.setContentText("Debe darle un número de juegos a todas las estanterías");
+			alert1.showAndWait();
+		}
+	}
+
+	private void initializeComboBoxShelfs() {
+		ObservableList<Character> options = 
+				FXCollections.observableArrayList(videogame.returnShelfs());
+		cbShelfs.setItems(options);
+	}
+
+
+	@FXML
+	public void buttonAddGame(ActionEvent event) {
+		if(!txtGameCode.getText().isEmpty() && !txtGamePrice.getText().isEmpty() && cbShelfs.getValue()!=null && !txtExemplarGames.getText().isEmpty()) {
+			Alert alert1 = new Alert(AlertType.INFORMATION);
+			alert1.setTitle("Error de validacion");
+			alert1.setHeaderText(null);
+			try {
+				videogame.addGame(txtGameCode.getText(), txtGamePrice.getText(), cbShelfs.getValue(), txtExemplarGames.getText());
+				initializeTableViewOfGames();
+			}catch(NumberFormatException num) {
+				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
+				alert1.showAndWait();
+			}catch(NegativeValueException value) {
+				alert1.setContentText(value.getMessage());
+				alert1.showAndWait();
+			}
+		}else {
+			showValidationErrorAlert();
+		}
+
+	}
+
+
+
+	private void initializeTableViewOfGames() {
+		ObservableList<Videogame> observableList;
+		observableList = FXCollections.observableArrayList(videogame.returnGames());
+		tvGames.setItems(observableList);
+		tcIdentifier.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Shelf"));
+		tcCode.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Code"));
+		tcPrice.setCellValueFactory(new PropertyValueFactory<Videogame, Double>("Price"));
+		tcExamplarGames.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Amount"));
+	}
+
+	@FXML
+	public void nextScreenAddGameToClient(ActionEvent event) throws IOException {
+		if(cbShelfs.getItems().isEmpty()) {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addGameToClient.fxml"));
+			fxmlLoader.setController(this);
+			Parent menuPane = fxmlLoader.load();
+			mainPane.getChildren().clear();
+			mainPane.setCenter(menuPane);
+			mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		}else {
+			Alert alert1 = new Alert(AlertType.ERROR);
+			alert1.setTitle("Error");
+			alert1.setHeaderText(null);
+			alert1.setContentText("Debe terminar de agregar los juegos en las estanterías");
+			alert1.showAndWait();
+		}
+	}
+
 
 	@FXML
 	public void goToSection4(ActionEvent event) throws IOException {
@@ -254,51 +375,6 @@ public class VideogameStoreGUI {
 
 	}
 
-	@FXML
-	public void addNumGameShelf(ActionEvent event) {
-
-	}
-
-	@FXML
-	public void nextAddGame(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addGame.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.setCenter(menuPane);
-		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");	
-	}
-	
-	private void initializeTableViewOfGames() {
-		ObservableList<Videogame> observableList;
-		observableList = FXCollections.observableArrayList(videogame.returnGames());
-		tvGames.setItems(observableList);
-		tcIdentifier.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Shelf"));
-		tcCode.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Code"));
-		tcPrice.setCellValueFactory(new PropertyValueFactory<Videogame, Double>("Price"));
-		tcExamplarGames.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("Amount"));
-	}
-	
-	@FXML
-	public void buttonAddGame(ActionEvent event) {
-		if(!txtGameCode.getText().equals("") && !txtGamePrice.getText().equals("") && !txtShelfGame.getText().equals("") && !txtExemplarGames.getText().equals("")) {
-			Alert alert1 = new Alert(AlertType.INFORMATION);
-			alert1.setTitle("Error de validacion");
-			alert1.setHeaderText(null);
-			try {
-				videogame.addGame(txtGameCode.getText(), txtGamePrice.getText(), txtShelfGame.getText().toUpperCase().charAt(0), txtExemplarGames.getText());
-			}catch(NumberFormatException num) {
-				alert1.setContentText("Debe ingresar un numero dentro de los campos presentados que asi lo requieran");
-				alert1.showAndWait();
-			}catch(NegativeValueException value) {
-				alert1.setContentText(value.getMessage());
-				alert1.showAndWait();
-			}
-		}else {
-			showValidationErrorAlert();
-		}
-		initializeTableViewOfGames();
-	}
 
 	@FXML
 	public void goToEndingScreen(ActionEvent event) throws IOException {
@@ -329,7 +405,7 @@ public class VideogameStoreGUI {
 		alert.setContentText("Recuerde diligenciar cada uno de los campos");
 		alert.showAndWait();
 	}
-	
+
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
