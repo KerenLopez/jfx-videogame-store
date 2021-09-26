@@ -25,48 +25,30 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 		}
 		return available;
 	}
-	public K searchKey(K key) {
-		K searched=null;
-		int i=0;
-
-		int hf= key.hashCode()%maxSize;
 	
-		do {
-			int h=h(i,hf);
-			
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
-				searched=hashTable[h].getKey();
-				i=Integer.MAX_VALUE;
-			}else {
-
-				i++;
-			}
-		}while(i<maxSize);
-
-		return searched;
-	}
 
 	@Override
 	public V search(K key) {
 		V searched=null;
 		int i=0;
-		//	int hf=hFunction(key);
+
 		int hf= key.hashCode()%maxSize;
-		System.out.println(hf+"hf");
 
 		do {
 			int h=h(i,hf);
-			System.out.println(h+"h");
-			System.out.println(hf+"hf2");
-			System.out.println(i+"i");
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
+			
+			if(hashTable[h]!=null && hashTable[h].getKey().equals(key)) {
 				searched=hashTable[h].getValue();
 				i=Integer.MAX_VALUE;
 
 			}else {
-				System.out.println("aloooo");
+				if(hashTable[h]!=null) {
+					i++;
+				}else {
+					i=Integer.MAX_VALUE;
+				}
 
-				i++;
+				
 			}
 		}while(i<maxSize);
 
@@ -76,7 +58,7 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 	@Override
 	public void add(K key, V value) {
 		int i=0;
-		//int hf=hFunction(key);
+		
 		int hf= key.hashCode()%maxSize;
 		do {
 			int h=h(i,hf);
@@ -97,19 +79,23 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 	public boolean delete(K key) {
 		boolean deleted=false;
 		int i=0;
-		//int hf=hFunction(key);
+	
 		int hf= key.hashCode()%maxSize;
 
 
 		do {
 			int h=h(i,hf);
 
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
+			if(hashTable[h]!=null && hashTable[h].getKey().equals(key)) {
 				hashTable[h]=null;
 				deleted=true;
 				size--;
 			}else {
-				i++;
+				if(hashTable[h]!=null) {
+					i++;
+				}else {
+					i=Integer.MAX_VALUE;
+				}
 			}
 		}while(i<maxSize && !deleted);
 
@@ -118,47 +104,35 @@ public class HashTable<K,V> implements IHashTable<K,V> {
 	}
 
 
-	public int h(int i, int hf) {
+	private int h(int i, int hf) {
 		int hn=0;
 		hn=(hf+i)%maxSize;
 		return hn;
 	}
-	/*
-	public int hFunction(K key) {
-		String str= String.valueOf(key);
 
-		int hf=0;
-		for(int j=0; j<str.length();j++) {
-			char c=str.charAt(j);
-			System.out.println(Character.getNumericValue(c)+"char");
-			System.out.println(Math.pow(128, str.length()-1-j));
-			hf+=(Character.getNumericValue(c))*(Math.pow(128, str.length()-1-j));
-			System.out.println(hf);
-
-		}
-		hf=hf%maxSize;
-		System.out.println(hf+"mod");
-
-		return hf;
-	}
-	 */
 	@Override
 	public void replace(K key, V value) {
 		int i=0;
-		//int hf=hFunction(key);
+	
 		int hf= key.hashCode()%maxSize;
-		int h=h(i,hf);
+		
 		do {
-			if(hashTable[h]!=null && hashTable[h].getKey()==key) {
+			int h=h(i,hf);
+			if(hashTable[h]!=null && hashTable[h].getKey().equals(key)) {
 				hashTable[h].setValue(value);
 				i=Integer.MAX_VALUE;
 			}else {
-				i++;
+				if(hashTable[h]!=null) {
+					i++;
+				}else {
+					i=Integer.MAX_VALUE;
+				}
 			}
 		}while(i<maxSize);
 
 	}
-
+	
+	@Override
 	public ArrayList<V> elements(){
 		ArrayList<V> elem=new ArrayList<>();
 		for(int i=0; i<maxSize;i++) {
