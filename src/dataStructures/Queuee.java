@@ -2,8 +2,8 @@ package dataStructures;
 
 public class Queuee<T> implements QueueInterface<T>{
     
-    private queueNode<T> frontPerson;
-    private queueNode<T> backPerson;
+    private QueueNode<T> frontPerson;
+    private QueueNode<T> backPerson;
     private int size;
 
     public Queuee() {
@@ -15,15 +15,15 @@ public class Queuee<T> implements QueueInterface<T>{
     @Override
     public void enqueue(T person) {
         if(isEmpty()) {
-            frontPerson = new queueNode<>(person);
+            frontPerson = new QueueNode<>(person);
             backPerson = frontPerson;
         }
         else {
-            queueNode<T> currentPerson = frontPerson;
+            QueueNode<T> currentPerson = frontPerson;
             while(currentPerson.getLastPerson()!=null) {
                     currentPerson = currentPerson.getLastPerson();
             }
-            currentPerson.setLastPerson(new queueNode<>(person));
+            currentPerson.setLastPerson(new QueueNode<>(person));
             backPerson = currentPerson.getLastPerson();
         }
         size++;
