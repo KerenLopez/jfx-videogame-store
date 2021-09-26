@@ -222,7 +222,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		videogame.saveGamesInbaskets();
+		videogame.saveGamesInbag();
 		initializeTableViewS3();
 	}
 
@@ -405,7 +405,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		videogame.saveGamesInbags();
+		videogame.saveGamesInbag();
 		initializeTableViewS4();
 	}
 
