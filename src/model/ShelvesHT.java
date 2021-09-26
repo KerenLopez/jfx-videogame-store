@@ -18,10 +18,12 @@ public class ShelvesHT {
 	}
 
 	public void createShelves() {
-		char c=65;
+		
 		for(int i=0; i<shelves.getMaxSize();i++) {
+			char c=65;
 			c+=i;
 			shelves.add(c, null);
+			
 		}
 	}
 
@@ -44,6 +46,34 @@ public class ShelvesHT {
 		}
 		return catalog;
 		
+	}
+	
+	public ArrayList<Character> returnShelvesInd(){
+		ArrayList<Character> shelvesInd=new ArrayList<>();
+		
+		for(int i=0; i<shelves.getMaxSize();i++) {
+			char c=65;
+			c+=i;
+	
+			if( shelves.search(c)==null) {
+				shelvesInd.add(c);
+			}
+		}
+		return shelvesInd;
+	}
+	
+	public ArrayList<Character> returnShelfs(){
+		ArrayList<Character> shelvesInd=new ArrayList<>();
+		
+		for(int i=0; i<shelves.getMaxSize();i++) {
+			char c=65;
+			c+=i;
+			HashTable<Integer,Videogame> ht=shelves.search(c);
+			if( ht!=null && ht.slotsAvailable()) {
+				shelvesInd.add(c);
+			}
+		}
+		return shelvesInd;
 	}
 
 }

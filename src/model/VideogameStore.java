@@ -75,27 +75,12 @@ public class VideogameStore {
 	//if(shelves.getShelves().search(i).slotsAvailable()) {
 
 	public ArrayList<Character> returnShelvesInd(){
-		ArrayList<Character> shelvesInd=new ArrayList<>();
-		char c=65;
-		for(int i=0; i<shelves.getShelves().getMaxSize();i++) {
-			c+=i;
-			if(shelves.getShelves().search(c)!=null) {
-				shelvesInd.add(c);
-			}
-		}
-		return shelvesInd;
+		
+		return shelves.returnShelvesInd();
 	}
 
 	public ArrayList<Character> returnShelfs(){
-		ArrayList<Character> shelvesInd=new ArrayList<>();
-		char c=65;
-		for(int i=0; i<shelves.getShelves().getMaxSize();i++) {
-			c+=i;
-			if(shelves.getShelves().search(c).slotsAvailable()) {
-				shelvesInd.add(c);
-			}
-		}
-		return shelvesInd;
+		return shelves.returnShelfs();
 	}
 
 	public void setNumberGamesShelf(int size, Character shelf) {
