@@ -13,10 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -100,6 +102,15 @@ public class VideogameStoreGUI {
         
         @FXML
         private Button btAddGameToClient;
+        
+        @FXML
+        private RadioButton rbInsertion;
+
+        @FXML
+        private ToggleGroup sortsAlgorithm;
+
+        @FXML
+        private RadioButton rbSelection;
 
 
 	public VideogameStoreGUI(VideogameStore v) {
@@ -231,7 +242,8 @@ public class VideogameStoreGUI {
 
         @FXML
 	public void buttonAddclient(ActionEvent event) {
-            if(!txtIdClient.getText().equals("")){
+            String strSort = getRadioButtonSortsAlgorithm();
+            if(!txtIdClient.getText().equals("") && strSort!="no"){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmacion de registro");
                 alert.setHeaderText("Mensaje de confirmacion");
@@ -240,7 +252,7 @@ public class VideogameStoreGUI {
 
                 if (result.get() == ButtonType.OK){
                     txtIdClient.setText("");
-                    alert.setContentText(videogame.addClient(txtIdClient.getText()));
+                    alert.setContentText(videogame.addClient(txtIdClient.getText(), strSort));
                 }
             }
             else {
@@ -251,6 +263,19 @@ public class VideogameStoreGUI {
                 alert.showAndWait();
             }
 	}
+        
+        public String getRadioButtonSortsAlgorithm() {
+            String sort = "";
+            if(rbInsertion.isSelected()) {
+                sort = "INSERTION";
+            } 
+            else if (rbSelection.isSelected()) {
+                sort = "SELECTION";
+            } else {
+                sort = "no";
+            }
+            return sort;
+        }
 
         @FXML
         public void clickOnTableViewOfAddGameToClient(MouseEvent event) {

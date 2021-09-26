@@ -127,11 +127,11 @@ public class VideogameStore {
 		return foundClientID;
 	}
 
-	public String addClient(String ID){
+	public String addClient(String ID, String sort){
 		Client foundClient=findClientID(ID);
 		String message="Cliente agregado exitosamente";
 		if(foundClient==null){
-			clients.add(new Client(ID));
+			clients.add(new Client(ID, sort));
 		}
 		else{
 			message="Lo siento, el cliente existe en la plataforma";

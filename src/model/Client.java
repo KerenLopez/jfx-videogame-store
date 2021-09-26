@@ -12,12 +12,13 @@ public class Client {
     private String basketOrder;
     private String bagOrder;
     private double purchaseValue;
+	private sortAlgorithm sort;
     private int timeUnit;
     private ArrayList<Videogame> gameList;
     private Stack<Videogame> shoppingBag;
     private Stack<Videogame> shoppingBasket;
 
-    public Client(String id) {
+    public Client(String id, String sort) {
         this.id = id;
         listCode=null;
         purchaseValue=0;
@@ -27,6 +28,12 @@ public class Client {
         shoppingBasket = new Stack<Videogame>();
         basketOrder="";
         bagOrder="";
+	if(sort.equalsIgnoreCase("INSERTION")) {
+            this.sort = sortAlgorithm.INSERTION;
+        }
+        else {
+            this.sort = sortAlgorithm.SELECTION;
+        }
     }
     
     public void saveGamesInBasket(ArrayList<Videogame> games) {
@@ -92,4 +99,12 @@ public class Client {
 	public String getBagOrder() {
 		return bagOrder;
 	}
+
+	public sortAlgorithm getSort() {
+        	return sort;
+    	}
+
+    	public void setSort(sortAlgorithm sort) {
+        	this.sort = sort;
+    	}
 }
