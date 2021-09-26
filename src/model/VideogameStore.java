@@ -10,11 +10,20 @@ public class VideogameStore {
 	private ShelvesHT shelves;
 
 	public VideogameStore() {
-		
+
 	}
 
+	public ArrayList<Client> returnResultS2() {
 
-	
+	}
+
+	public ArrayList<Client> returnResultS3() {
+
+	}
+
+	public ArrayList<Client> returnResultS4() {
+
+	}
 
 	public void addGame(String c, String p, char i, String a) throws NegativeValueException {
 		int code = Integer.parseInt(c);

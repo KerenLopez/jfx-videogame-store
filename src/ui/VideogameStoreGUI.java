@@ -229,7 +229,6 @@ public class VideogameStoreGUI {
 					alert1.showAndWait();
 				}
 			}
-			
 		}else {
 			showValidationErrorAlert();
 		}
