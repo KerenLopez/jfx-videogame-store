@@ -10,7 +10,7 @@ public class VideogameStore {
 
 	private Client[] cashiers;
 	private ShelvesHT shelves;
-        private Client client;
+	private Client client;
 
 	public VideogameStore() {
 		clients = new ArrayList<>();
@@ -79,26 +79,29 @@ public class VideogameStore {
 		}
 		return founded;
 	}
-	
+
 	public void saveGamesInbasket() {
 		for(int k=0;k<clients.size();k++) {
 			clients.get(k).saveGamesInBasket();
 		}
 	}
-	
+
 	public void saveGamesInbag() {
 		for(int k=0;k<clients.size();k++) {
 			clients.get(k).saveGamesInBag();
 		}
 	}
-	
+
 	public void orderClientsListsOfGames() {
 		for(int k=0;k<clients.size();k++) {
-			clients.get(k).setTimeUnit((clients.get(k).getTimeUnit())+1);
 			if(clients.get(k).getSort().equals(SortAlgorithm.INSERTION)) {
+				System.out.println("antes: "+clients.get(k).getGameList());
 				clients.get(k).orderListByInsertion();
+				System.out.println("despues: "+clients.get(k).getGameList());
 			}else {
+				System.out.println("antes: "+clients.get(k).getGameList());
 				clients.get(k).orderListBySelection();
+				System.out.println("despues: "+clients.get(k).getGameList());
 			}
 		}
 	}
@@ -129,7 +132,7 @@ public class VideogameStore {
 		for(int i=0;i<clients.size() && finish;i++){
 			if(clients.get(i).getId().equals(ID)){
 				foundClientID=clients.get(i);
-                                finish=false;
+				finish=false;
 			} 
 		}
 		return foundClientID;
@@ -140,6 +143,11 @@ public class VideogameStore {
 		String message="Cliente agregado exitosamente";
 		if(foundClient==null){
 			clients.add(new Client(ID, sort));
+			if(clients.size()==1) {
+				clients.get(clients.size()-1).setTimeUnit(1);
+			}else {
+				clients.get(clients.size()-1).setTimeUnit(clients.get(clients.size()-2).getTimeUnit()+1);
+			}
 		}
 		else{
 			message="Lo siento, el cliente existe en la plataforma";
@@ -148,16 +156,15 @@ public class VideogameStore {
 	}
 
 	public String addGameToClient(Videogame game,Client clientId){
-            String message="Juego agregado exitosamente al cliente";
-            
-            if(clientId.searchGame(game)==false){
-                clientId.getGameList().add(game);
-                game.setAmount(game.getAmount()-1);
-                System.out.print("Hola");
-            }
-            else{
-                message="Lo siento, este juego ya lo agrego el cliente";
-            }
-            return message;
+		String message="Juego agregado exitosamente al cliente";
+
+		if(clientId.searchGame(game)==false){
+			clientId.getGameList().add(game);
+			System.out.print("Hola");
+		}
+		else{
+			message="Lo siento, este juego ya lo agrego el cliente";
+		}
+		return message;
 	}
 }

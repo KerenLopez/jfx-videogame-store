@@ -2,6 +2,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dataStructures.Stack;
 
@@ -15,6 +16,7 @@ public class Client {
 	private SortAlgorithm sort;
 	private int timeUnit;
 	private ArrayList<Videogame> gameList;
+	private ArrayList<Videogame> sortedList;
 	private Stack<Videogame> shoppingBag;
 	private Stack<Videogame> shoppingBasket;
 
@@ -24,6 +26,7 @@ public class Client {
 		purchaseValue=0;
 		timeUnit=0;
 		gameList = new ArrayList<Videogame>();
+		sortedList = new ArrayList<Videogame>();
 		shoppingBag = new Stack<Videogame>();
 		shoppingBasket = new Stack<Videogame>();
 		basketOrder="";
@@ -38,16 +41,16 @@ public class Client {
 	
 	public void saveGamesInBasket() {
 		for (int k=0;k<gameList.size();k++) {
-			gameList.get(k).setAmount((gameList.get(k).getAmount())-1);
-			basketOrder += ""+gameList.get(k).getCode()+"/n";
-			shoppingBasket.push(gameList.get(k));
+			sortedList.get(k).setAmount(sortedList.get(k).getAmount()-1);
+			basketOrder = ""+sortedList.get(k).getCode()+"\n"+basketOrder;
+			shoppingBasket.push(sortedList.get(k));
 			timeUnit++;
 		}
 	}
 
 	public void saveGamesInBag() {
 		while(!shoppingBasket.isEmpty()) {
-			bagOrder = getBagOrder() + shoppingBasket.top().getCode()+"/n";
+			bagOrder = shoppingBasket.top().getCode()+"\n"+ bagOrder;
 			purchaseValue = getPurchaseValue()+(shoppingBasket.top().getPrice());
 			shoppingBag.push(shoppingBasket.pop());
 		}
@@ -130,28 +133,30 @@ public class Client {
 	}
 
 	public void orderListByInsertion() {
-		for(int i = 1;i<gameList.size();i++) {
-			for(int j=i;j>0 && gameList.get(j-1).getShelf()>gameList.get(j).getShelf();j--) {
-				if(gameList.get(j).getAmount()>0) {
-					Videogame temp = gameList.get(j);
-					gameList.set(j, gameList.get(j-1));
-					gameList.set(j-1, temp); 
+		sortedList.addAll(gameList);
+		for(int i = 1;i<sortedList.size();i++) {
+			for(int j=i;j>0 && Character.compare(sortedList.get(j-1).getShelf(), sortedList.get(j).getShelf())>0;j--) {
+				if(sortedList.get(j).getAmount()>0) {
+					Videogame temp = sortedList.get(j);
+					sortedList.set(j, sortedList.get(j-1));
+					sortedList.set(j-1, temp); 
 				}
 			}
 		}
 	}
 
 	public void orderListBySelection() {
-		for(int i=0;i<gameList.size();i++) {
-			char min = gameList.get(i).getShelf();
-			for(int j=i+1;j<gameList.size();j++) {
-				if(gameList.get(j).getShelf()<min && gameList.get(j).getAmount()>0) {
-					Videogame temp = gameList.get(j);
-					gameList.set(j, gameList.get(i));
-					gameList.set(i,temp);
+		sortedList.addAll(gameList);
+		for(int i=0;i<sortedList.size();i++) {
+			char min = sortedList.get(i).getShelf();
+			for(int j=i+1;j<sortedList.size();j++) {
+				if(Character.compare(sortedList.get(j).getShelf(),min)<0 && sortedList.get(j).getAmount()>0) {
+					Videogame temp = sortedList.get(j);
+					sortedList.set(j, sortedList.get(i));
+					sortedList.set(i,temp);
 				}
 			}
-			gameList.set(i,gameList.get(i));
+			sortedList.set(i,sortedList.get(i));
 		}
 	}
         

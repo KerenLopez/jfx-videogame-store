@@ -210,7 +210,7 @@ public class VideogameStoreGUI {
 	private void initializeTableViewS3() {
 		ObservableList<Client> observableList;
 		observableList = FXCollections.observableArrayList(videogame.getClients());
-		tvS2.setItems(observableList);
+		tvS3.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
 		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("StringGameList"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("TimeUnit"));
@@ -225,7 +225,7 @@ public class VideogameStoreGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		videogame.saveGamesInbag();
+		videogame.saveGamesInbasket();
 		initializeTableViewS3();
 	}
 
@@ -280,8 +280,9 @@ public class VideogameStoreGUI {
 	private void initializeTableViewS4() {
 		ObservableList<Client> observableList;
 		observableList = FXCollections.observableArrayList(videogame.getClients());
-		tvS2.setItems(observableList);
+		tvS4.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
+		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("BasketOrder"));
 		bagCol.setCellValueFactory(new PropertyValueFactory<Client, String>("BagOrder"));
 		totalpriceCol.setCellValueFactory(new PropertyValueFactory<Client, Double>("purchaseValue"));
 	}
