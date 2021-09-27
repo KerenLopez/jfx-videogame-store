@@ -2,49 +2,53 @@ package dataStructures;
 
 public class Queuee<T> implements QueueInterface<T>{
     
-    private QueueNode<T> frontPerson;
-    private QueueNode<T> backPerson;
+    private QueueNode<T> front;
+    private QueueNode<T> back;
     private int size;
 
     public Queuee() {
-        frontPerson = null;
-        backPerson = null;
+        front = null;
+        back = null;
         size=0;
     }
     
     @Override
-    public void enqueue(T person) {
+    public void enqueue(T element) {
         if(isEmpty()) {
-            frontPerson = new QueueNode<>(person);
-            backPerson = frontPerson;
+            front = new QueueNode<>(element);
+            back = front;
         }
         else {
-            QueueNode<T> currentPerson = frontPerson;
-            while(currentPerson.getLastPerson()!=null) {
-                    currentPerson = currentPerson.getLastPerson();
+            QueueNode<T> current = front;
+            while(current.getLastElement()!=null) {
+                    current= current.getLastElement();
             }
-            currentPerson.setLastPerson(new QueueNode<>(person));
-            backPerson = currentPerson.getLastPerson();
+            current.setLastElement(new QueueNode<>(element));
+            back = current.getLastElement();
         }
         size++;
     }
 
     @Override
     public T dequeue() {
-        T personOutsideQueue = frontPerson.getPerson();
-        frontPerson = frontPerson.getLastPerson();
+        T outsideQueue = front.getElement();
+        front = front.getLastElement();
         size--;
-        return personOutsideQueue;
+        return outsideQueue;
     }
 
     @Override
     public T front() {
-        return frontPerson.getPerson();
+        return front.getElement();
+    }
+    
+    @Override
+    public T back() {
+        return back.getElement();
     }
 
     @Override
     public boolean isEmpty() {
-        return frontPerson==null;
+        return front==null;
     }
-    
 }

@@ -226,6 +226,7 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		videogame.saveGamesInbasket();
+                videogame.createCashiersQueue();
 		initializeTableViewS3();
 	}
 
@@ -279,7 +280,7 @@ public class VideogameStoreGUI {
 
 	private void initializeTableViewS4() {
 		ObservableList<Client> observableList;
-		observableList = FXCollections.observableArrayList(videogame.getClients());
+		observableList = FXCollections.observableArrayList(videogame.passByCashiers());
 		tvS4.setItems(observableList);
 		idCol.setCellValueFactory(new PropertyValueFactory<Client, String>("Id"));
 		basketCol.setCellValueFactory(new PropertyValueFactory<Client, String>("BasketOrder"));
@@ -481,7 +482,7 @@ public class VideogameStoreGUI {
              Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
              alert.setTitle("Confirmacion de registro");
              alert.setHeaderText("Mensaje de confirmacion");
-             alert.setContentText("¿Estas seguro de confirmar esta informacion?");
+             alert.setContentText("Estas seguro de confirmar esta informacion?");
              Optional<ButtonType> result = alert.showAndWait();
 
              if (result.get() == ButtonType.OK){
@@ -498,7 +499,7 @@ public class VideogameStoreGUI {
              Alert alert = new Alert(Alert.AlertType.WARNING);
              alert.setTitle("Error de registro");
              alert.setHeaderText("Mensaje de advertencia");
-             alert.setContentText("¡Por favor llene todos los campos que se le solicitan!");
+             alert.setContentText("Por favor llene todos los campos que se le solicitan!");
              alert.showAndWait();
          }
 	}

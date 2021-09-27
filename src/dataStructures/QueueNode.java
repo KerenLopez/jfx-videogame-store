@@ -3,24 +3,23 @@ package dataStructures;
 
 public class QueueNode <T> {
     
-    private T person;
-    private QueueNode<T> lastPerson;
+    private T element;
+    private QueueNode<T> lastElement;
 
-    public QueueNode(T p) {
-        p = person;
-        lastPerson = null;
+    public QueueNode(T e) {
+        element=e;
+        lastElement = null;
     }
 
-    public QueueNode<T> getLastPerson() {
-        return lastPerson;
+    public QueueNode<T> getLastElement() {
+        return lastElement;
     }
 
-    public void setLastPerson(QueueNode<T> lp) {
-        lp = lastPerson;
+    public void setLastElement(QueueNode<T> le) {
+        lastElement=le;
     }
 
-    public T getPerson() {
-        return person;
+    public T getElement() {
+        return element;
     }
-    
 }

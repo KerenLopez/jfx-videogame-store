@@ -104,7 +104,7 @@
                   <Font name="Impact" size="20.0" />
                </font>
             </Button>
-            <ComboBox fx:id="comboxClients" layoutX="204.0" layoutY="176.0" prefWidth="150.0" />
+            <ComboBox fx:id="comboxClients" layoutX="204.0" layoutY="176.0" prefWidth="150.0" promptText="Seleccionar" />
             <Label layoutX="35.0" layoutY="169.0" prefHeight="39.0" prefWidth="171.0" text="Seleccionar cliente">
                <font>
                   <Font name="Juice ITC" size="30.0" />
