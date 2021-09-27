@@ -95,13 +95,9 @@ public class VideogameStore {
 	public void orderClientsListsOfGames() {
 		for(int k=0;k<clients.size();k++) {
 			if(clients.get(k).getSort().equals(SortAlgorithm.INSERTION)) {
-				System.out.println("antes: "+clients.get(k).getGameList());
 				clients.get(k).orderListByInsertion();
-				System.out.println("despues: "+clients.get(k).getGameList());
 			}else {
-				System.out.println("antes: "+clients.get(k).getGameList());
 				clients.get(k).orderListBySelection();
-				System.out.println("despues: "+clients.get(k).getGameList());
 			}
 		}
 	}
@@ -156,28 +152,14 @@ public class VideogameStore {
 	}
 
 	public String addGameToClient(Videogame game,Client clientId){
-<<<<<<< HEAD
 		String message="Juego agregado exitosamente al cliente";
 
 		if(clientId.searchGame(game)==false){
 			clientId.getGameList().add(game);
-			System.out.print("Hola");
 		}
 		else{
 			message="Lo siento, este juego ya lo agrego el cliente";
 		}
 		return message;
-=======
-            String message="Juego agregado exitosamente al cliente";
-            
-            if(clientId.searchGame(game)==false){
-                clientId.getGameList().add(game);
-                game.setAmount(game.getAmount()-1);
-            }
-            else{
-                message="Lo siento, este juego ya lo agrego el cliente";
-            }
-            return message;
->>>>>>> 4e9f7e191ebaa612d2d19cb2c3a33e83a51a956b
 	}
 }
