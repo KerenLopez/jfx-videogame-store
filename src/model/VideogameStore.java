@@ -156,6 +156,7 @@ public class VideogameStore {
 	}
 
 	public String addGameToClient(Videogame game,Client clientId){
+<<<<<<< HEAD
 		String message="Juego agregado exitosamente al cliente";
 
 		if(clientId.searchGame(game)==false){
@@ -166,5 +167,17 @@ public class VideogameStore {
 			message="Lo siento, este juego ya lo agrego el cliente";
 		}
 		return message;
+=======
+            String message="Juego agregado exitosamente al cliente";
+            
+            if(clientId.searchGame(game)==false){
+                clientId.getGameList().add(game);
+                game.setAmount(game.getAmount()-1);
+            }
+            else{
+                message="Lo siento, este juego ya lo agrego el cliente";
+            }
+            return message;
+>>>>>>> 4e9f7e191ebaa612d2d19cb2c3a33e83a51a956b
 	}
 }
