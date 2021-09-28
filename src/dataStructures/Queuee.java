@@ -1,50 +1,73 @@
 package dataStructures;
 
-public class Queuee<T> implements QueueInterface<T>{
+public class Queuee<T> implements IQueue<T>{
     
-    private QueueNode<T> frontPerson;
-    private QueueNode<T> backPerson;
+    private NodeQ<T> front;
+    private NodeQ<T> back;
     private int size;
 
     public Queuee() {
-        frontPerson = null;
-        backPerson = null;
+        front = null;
+        back = null;
         size=0;
     }
     
     @Override
-    public void enqueue(T person) {
+    public void enqueue(T element) {
         if(isEmpty()) {
-            frontPerson = new QueueNode<>(person);
-            backPerson = frontPerson;
+            front = new NodeQ<>(element);
+            back = front;
         }
         else {
-            QueueNode<T> currentPerson = frontPerson;
-            while(currentPerson.getLastPerson()!=null) {
-                    currentPerson = currentPerson.getLastPerson();
+            NodeQ<T> current = front;
+            while(current.getLastElement()!=null) {
+                    current= current.getLastElement();
             }
-            currentPerson.setLastPerson(new QueueNode<>(person));
-            backPerson = currentPerson.getLastPerson();
+            current.setLastElement(new NodeQ<>(element));
+            back = current.getLastElement();
         }
         size++;
     }
 
     @Override
     public T dequeue() {
-        T personOutsideQueue = frontPerson.getPerson();
-        frontPerson = frontPerson.getLastPerson();
-        size--;
-        return personOutsideQueue;
+        T outsideQueue = null;
+        if(!isEmpty()){
+            outsideQueue = front.getElement();
+            front = front.getLastElement();
+            size--;
+        }
+        return outsideQueue;
     }
 
     @Override
     public T front() {
-        return frontPerson.getPerson();
+        T element=null;
+        if(!isEmpty()) {
+            element = front.getElement();
+        }
+        return element;
+    }
+    
+    @Override
+    public T back() {
+        T element=null;
+        if(!isEmpty()) {
+            element = back.getElement();
+        }
+        return element;
     }
 
     @Override
     public boolean isEmpty() {
-        return frontPerson==null;
+        boolean empty = false;
+        if(size==0) {
+            empty = true;
+	}
+        return empty;
     }
-    
+
+    public int getSize() {
+        return size;
+    }
 }

@@ -2,11 +2,10 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dataStructures.Stack;
 
-public class Client {
+public class Client implements Comparable<Client>{
 
 	private String id;
 	private String listCode;
@@ -15,6 +14,7 @@ public class Client {
 	private double purchaseValue;
 	private SortAlgorithm sort;
 	private int timeUnit;
+        private int amountPurchaseGames;
 	private ArrayList<Videogame> gameList;
 	private ArrayList<Videogame> sortedList;
 	private Stack<Videogame> shoppingBag;
@@ -25,6 +25,7 @@ public class Client {
 		listCode=null;
 		purchaseValue=0;
 		timeUnit=0;
+                amountPurchaseGames=0;
 		gameList = new ArrayList<Videogame>();
 		sortedList = new ArrayList<Videogame>();
 		shoppingBag = new Stack<Videogame>();
@@ -45,6 +46,7 @@ public class Client {
 			basketOrder = ""+sortedList.get(k).getCode()+"\n"+basketOrder;
 			shoppingBasket.push(sortedList.get(k));
 			timeUnit++;
+                        amountPurchaseGames++;
 		}
 	}
 
@@ -93,6 +95,14 @@ public class Client {
 	public void setTimeUnit(int timeUnit) {
 		this.timeUnit = timeUnit;
 	}
+
+        public int getAmountPurchaseGames() {
+            return amountPurchaseGames;
+        }
+
+        public void setAmountPurchaseGames(int amountPurchaseGames) {
+            this.amountPurchaseGames = amountPurchaseGames;
+        }
 
 	public String getStringGameList() {
 		String list = "";
@@ -164,4 +174,9 @@ public class Client {
         public String toString() {
         return id;
         }
+        
+        @Override
+	public int compareTo(Client client) {
+            return Integer.compare(timeUnit, client.getTimeUnit());
+	}
 }

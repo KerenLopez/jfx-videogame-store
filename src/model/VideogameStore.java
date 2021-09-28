@@ -1,19 +1,22 @@
 package model;
 
+import dataStructures.Queuee;
 import java.util.ArrayList;
 
 import exceptions.CodeLengthException;
 import exceptions.NegativeValueException;
+import java.util.Collections;
 
 public class VideogameStore {
 	private ArrayList<Client> clients;
 
 	private Client[] cashiers;
 	private ShelvesHT shelves;
-	private Client client;
+        private Queuee<Client> cashiersQueue;
 
 	public VideogameStore() {
 		clients = new ArrayList<>();
+                cashiersQueue=new Queuee<>();
 	}
 
 	public Client[] getCashiers() {
@@ -162,4 +165,72 @@ public class VideogameStore {
 		}
 		return message;
 	}
+        
+        public void createCashiersQueue(){
+            Collections.sort(clients);
+            for(int i=0; i< clients.size(); i++){
+                cashiersQueue.enqueue(clients.get(i));
+            }
+	}
+        
+        public Client clientWithLessGame(){
+            Client cl =new Client("123456","INSERTION");
+            cl.setAmountPurchaseGames(Integer.MAX_VALUE);
+            for(int i=0;i<cashiers.length;i++){
+                if(cashiers[i]!=null && cashiers[i].getAmountPurchaseGames()<cl.getAmountPurchaseGames()){
+                    cl=cashiers[i];
+                }
+            }
+            return cl;
+        }
+        
+        
+        public ArrayList<Client> passByCashiers(){
+            ArrayList<Client> clientsLine= new ArrayList<>();
+            boolean exit = false;
+            while(!exit){
+                for(int i=0;i<cashiers.length;i++){
+                    if(cashiers[i]==null && !cashiersQueue.isEmpty()){
+                        cashiers[i]=cashiersQueue.dequeue();
+                    }
+                }
+                Client client=clientWithLessGame();
+                clientsLine.add(client);
+                int j=positionCashier(client);
+                cashiers[j]=null;
+                restGame(client);
+                if(cashiersEmpty()) {
+                    exit = true;
+                }
+            }
+            return clientsLine;
+	}
+        
+        public int positionCashier(Client client){
+            int j=-1;
+            for(int i=0;i<cashiers.length && j==-1;i++){
+                if(cashiers[i]!=null && cashiers[i].getId().equals(client.getId())){
+                    j=i;
+                }
+            }
+            return j;
+        }
+        
+        public boolean cashiersEmpty(){
+            boolean empty=true;
+            for(int i=0;i<cashiers.length && empty;i++){
+                if(cashiers[i]!=null){
+                    empty=false;
+                }
+            }
+            return empty;
+        }
+        
+        public void restGame(Client cl){
+            for(int i=0;i<cashiers.length;i++){
+                if(cashiers[i]!=null){
+                    cashiers[i].setAmountPurchaseGames(cashiers[i].getAmountPurchaseGames()-1-cl.getAmountPurchaseGames());
+                }
+            }
+        }
 }
