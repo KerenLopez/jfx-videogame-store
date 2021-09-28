@@ -1,21 +1,21 @@
 
 package dataStructures;
 
-public class QueueNode <T> {
+public class NodeQ <T> {
     
     private T element;
-    private QueueNode<T> lastElement;
+    private NodeQ<T> lastElement;
 
-    public QueueNode(T e) {
+    public NodeQ(T e) {
         element=e;
         lastElement = null;
     }
 
-    public QueueNode<T> getLastElement() {
+    public NodeQ<T> getLastElement() {
         return lastElement;
     }
 
-    public void setLastElement(QueueNode<T> le) {
+    public void setLastElement(NodeQ<T> le) {
         lastElement=le;
     }
 

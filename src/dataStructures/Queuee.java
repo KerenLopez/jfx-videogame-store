@@ -1,9 +1,9 @@
 package dataStructures;
 
-public class Queuee<T> implements QueueInterface<T>{
+public class Queuee<T> implements IQueue<T>{
     
-    private QueueNode<T> front;
-    private QueueNode<T> back;
+    private NodeQ<T> front;
+    private NodeQ<T> back;
     private int size;
 
     public Queuee() {
@@ -15,15 +15,15 @@ public class Queuee<T> implements QueueInterface<T>{
     @Override
     public void enqueue(T element) {
         if(isEmpty()) {
-            front = new QueueNode<>(element);
+            front = new NodeQ<>(element);
             back = front;
         }
         else {
-            QueueNode<T> current = front;
+            NodeQ<T> current = front;
             while(current.getLastElement()!=null) {
                     current= current.getLastElement();
             }
-            current.setLastElement(new QueueNode<>(element));
+            current.setLastElement(new NodeQ<>(element));
             back = current.getLastElement();
         }
         size++;
@@ -31,24 +31,43 @@ public class Queuee<T> implements QueueInterface<T>{
 
     @Override
     public T dequeue() {
-        T outsideQueue = front.getElement();
-        front = front.getLastElement();
-        size--;
+        T outsideQueue = null;
+        if(!isEmpty()){
+            outsideQueue = front.getElement();
+            front = front.getLastElement();
+            size--;
+        }
         return outsideQueue;
     }
 
     @Override
     public T front() {
-        return front.getElement();
+        T element=null;
+        if(!isEmpty()) {
+            element = front.getElement();
+        }
+        return element;
     }
     
     @Override
     public T back() {
-        return back.getElement();
+        T element=null;
+        if(!isEmpty()) {
+            element = back.getElement();
+        }
+        return element;
     }
 
     @Override
     public boolean isEmpty() {
-        return front==null;
+        boolean empty = false;
+        if(size==0) {
+            empty = true;
+	}
+        return empty;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

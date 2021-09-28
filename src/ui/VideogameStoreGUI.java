@@ -142,9 +142,9 @@ public class VideogameStoreGUI {
 
 	@FXML
 	private RadioButton rbSelection;
-        
-        @FXML
-        private ComboBox<Client> comboxClients;
+
+	@FXML
+	private ComboBox<Client> comboxClients;
 
 	public VideogameStoreGUI(VideogameStore v) {
 		videogame = v;
@@ -194,7 +194,7 @@ public class VideogameStoreGUI {
 		listgamesCol.setCellValueFactory(new PropertyValueFactory<Client, String>("StringGameList"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("TimeUnit"));
 	}
-	
+
 	@FXML
 	public void nextScreenSection2(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/section2.fxml"));
@@ -226,7 +226,7 @@ public class VideogameStoreGUI {
 		mainPane.setCenter(menuPane);
 		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		videogame.saveGamesInbasket();
-                videogame.createCashiersQueue();
+		videogame.createCashiersQueue();
 		initializeTableViewS3();
 	}
 
@@ -390,9 +390,9 @@ public class VideogameStoreGUI {
 			mainPane.getChildren().clear();
 			mainPane.setCenter(menuPane);
 			mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-                        
-                        initializeGamesCatalogueTableView();
-                        initializeClientsTableView();
+
+			initializeGamesCatalogueTableView();
+			initializeClientsTableView();
 		}else {
 			Alert alert1 = new Alert(AlertType.ERROR);
 			alert1.setTitle("Error");
@@ -424,84 +424,86 @@ public class VideogameStoreGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
-		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		mainPane.setStyle("-fx-background-image: url(/ui/fondo1.jpg)");
 
 	}
 
-	   public String getRadioButtonSortsAlgorithm() {
-           String sort = "";
-           if(rbInsertion.isSelected()) {
-               sort = "INSERTION";
-           } 
-           else if (rbSelection.isSelected()) {
-               sort = "SELECTION";
-           } else {
-               sort = "no";
-           }
-           return sort;
-       }
+	public String getRadioButtonSortsAlgorithm() {
+		String sort = "";
+		if(rbInsertion.isSelected()) {
+			sort = "INSERTION";
+		} 
+		else if (rbSelection.isSelected()) {
+			sort = "SELECTION";
+		} else {
+			sort = "no";
+		}
+		return sort;
+	}
 
-       @FXML
-        public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
-            Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
-            String clientID = comboxClients.getValue().toString();
-            Client client=videogame.findClientID(clientID);
-            if(selectGameInCatalogue!=null && client!=null){
-                btAddGameToClient.setDisable(false);
-            }
-        }
+	@FXML
+	public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
+		Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
+		if(comboxClients.getValue()!=null) {
+			String clientID = comboxClients.getValue().toString();
+			Client client=videogame.findClientID(clientID);
+			if(selectGameInCatalogue!=null && client!=null){
+				btAddGameToClient.setDisable(false);
+			}	
+		}
+	}
 
 	@FXML
 	public void addGametoclient(ActionEvent event) {
-            Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
-            Client clientID = comboxClients.getValue();
-            if(clientID!=null){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
-                alert.setHeaderText(null);
-                alert.setContentText(videogame.addGameToClient(selectGameInCatalogue,clientID));
-                alert.showAndWait();
-                btAddGameToClient.setDisable(true);
-                tvClientList.getItems().clear();
-                initializeClientsTableView();
-            }
-            else{
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
-                alert.setHeaderText(null);
-                alert.setContentText("Por favor escoger un cliente");
-                alert.showAndWait();
-            }
+		Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
+		Client clientID = comboxClients.getValue();
+		if(clientID!=null){
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Informacion");
+			alert.setHeaderText(null);
+			alert.setContentText(videogame.addGameToClient(selectGameInCatalogue,clientID));
+			alert.showAndWait();
+			btAddGameToClient.setDisable(true);
+			tvClientList.getItems().clear();
+			initializeClientsTableView();
+		}
+		else{
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Informacion");
+			alert.setHeaderText(null);
+			alert.setContentText("Por favor escoger un cliente");
+			alert.showAndWait();
+		}
 	}
-	
+
 	@FXML
 	public void buttonAddclient(ActionEvent event) {
-		 String strSort = getRadioButtonSortsAlgorithm();
-                 String message="";
-         if(!txtIdClient.getText().equals("") && strSort!="no"){
-             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-             alert.setTitle("Confirmacion de registro");
-             alert.setHeaderText("Mensaje de confirmacion");
-             alert.setContentText("Estas seguro de confirmar esta informacion?");
-             Optional<ButtonType> result = alert.showAndWait();
+		String strSort = getRadioButtonSortsAlgorithm();
+		String message="";
+		if(!txtIdClient.getText().equals("") && strSort!="no"){
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Confirmacion de registro");
+			alert.setHeaderText("Mensaje de confirmacion");
+			alert.setContentText("Estas seguro de confirmar esta informacion?");
+			Optional<ButtonType> result = alert.showAndWait();
 
-             if (result.get() == ButtonType.OK){
-                 message=videogame.addClient(txtIdClient.getText(), strSort);
-                 txtIdClient.setText("");
-                 alert.setContentText(message);
-                 alert.showAndWait();
-                 initializeClientsTableView();
-                 ObservableList<Client> observableComboBoxClients= FXCollections.observableArrayList(videogame.getClients());
-                 comboxClients.setItems(observableComboBoxClients);
-             }
-         }
-         else {
-             Alert alert = new Alert(Alert.AlertType.WARNING);
-             alert.setTitle("Error de registro");
-             alert.setHeaderText("Mensaje de advertencia");
-             alert.setContentText("Por favor llene todos los campos que se le solicitan!");
-             alert.showAndWait();
-         }
+			if (result.get() == ButtonType.OK){
+				message=videogame.addClient(txtIdClient.getText(), strSort);
+				txtIdClient.setText("");
+				alert.setContentText(message);
+				alert.showAndWait();
+				initializeClientsTableView();
+				ObservableList<Client> observableComboBoxClients= FXCollections.observableArrayList(videogame.getClients());
+				comboxClients.setItems(observableComboBoxClients);
+			}
+		}
+		else {
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.setTitle("Error de registro");
+			alert.setHeaderText("Mensaje de advertencia");
+			alert.setContentText("Por favor llene todos los campos que se le solicitan!");
+			alert.showAndWait();
+		}
 	}
 
 	public void showValidationErrorAlert() {
@@ -514,7 +516,7 @@ public class VideogameStoreGUI {
 
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		alert.setContentText("¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}

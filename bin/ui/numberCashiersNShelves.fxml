@@ -11,31 +11,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane prefHeight="145.0" prefWidth="600.0">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="236.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="364.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="446.0" minWidth="10.0" prefWidth="446.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="247.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Número de cajeros: ">
+                  <Label text="Número de cajeros ">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="Juice ITC" size="24.0" />
                      </font>
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Número de estanterías:  " GridPane.rowIndex="1">
+                  <Label text="Número de estanterías  " GridPane.rowIndex="1">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="Juice ITC" size="24.0" />
                      </font>
                      <GridPane.margin>
                         <Insets right="10.0" />
@@ -43,22 +43,22 @@
                   </Label>
                   <TextField fx:id="txtNumCashiers" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets right="90.0" />
+                        <Insets right="200.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="txtNumShelves" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="txtNumShelves" prefHeight="25.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets right="90.0" />
+                        <Insets right="200.0" />
                      </GridPane.margin>
                   </TextField>
                </children>
             </GridPane>
-            <Button mnemonicParsing="false" onAction="#nextShelves" prefHeight="36.0" prefWidth="91.0" text="Siguiente">
+            <Button mnemonicParsing="false" onAction="#nextShelves" prefHeight="36.0" prefWidth="108.0" text="Siguiente">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="Impact" size="17.0" />
                </font>
                <VBox.margin>
-                  <Insets top="40.0" />
+                  <Insets left="10.0" top="40.0" />
                </VBox.margin>
             </Button>
          </children>

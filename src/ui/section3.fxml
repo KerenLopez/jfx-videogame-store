@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TableView fx:id="tvS3" prefHeight="278.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tvS3" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="111.0" text="Cédula" />
-          <TableColumn fx:id="listgamesCol" prefWidth="188.0" text="Listado de juegos" />
-            <TableColumn fx:id="timeCol" prefWidth="117.0" text="Tiempo" />
-            <TableColumn fx:id="basketCol" maxWidth="145.0" prefWidth="123.0" text="Cesto" />
+          <TableColumn fx:id="listgamesCol" prefWidth="302.0" text="Listado de juegos" />
+            <TableColumn fx:id="timeCol" prefWidth="148.0" text="Tiempo" />
+            <TableColumn fx:id="basketCol" maxWidth="333.0" prefWidth="188.0" text="Cesto" />
         </columns>
          <BorderPane.margin>
             <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
@@ -25,20 +25,20 @@
    <bottom>
       <Button mnemonicParsing="false" onAction="#goToSection4" text="Siguiente" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="20.0" />
+            <Insets bottom="30.0" left="20.0" />
          </BorderPane.margin>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Impact" size="17.0" />
          </font>
       </Button>
    </bottom>
    <top>
       <Label text="Sección 3" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets top="30.0" />
+            <Insets top="50.0" />
          </BorderPane.margin>
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font name="Juice ITC" size="30.0" />
          </font>
       </Label>
    </top>
