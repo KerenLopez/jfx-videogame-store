@@ -423,7 +423,7 @@ public class VideogameStoreGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
-		mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		mainPane.setStyle("-fx-background-image: url(/ui/fondo1.jpg)");
 
 	}
 
@@ -443,10 +443,12 @@ public class VideogameStoreGUI {
        @FXML
         public void clickOnTableViewOfAddGameToClient(MouseEvent event) {
             Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
-            String clientID = comboxClients.getValue().toString();
-            Client client=videogame.findClientID(clientID);
-            if(selectGameInCatalogue!=null && client!=null){
-                btAddGameToClient.setDisable(false);
+            if(comboxClients.getValue()!=null) {
+            	 String clientID = comboxClients.getValue().toString();
+                 Client client=videogame.findClientID(clientID);
+                 if(selectGameInCatalogue!=null && client!=null){
+                     btAddGameToClient.setDisable(false);
+                 }	
             }
         }
 
@@ -513,7 +515,7 @@ public class VideogameStoreGUI {
 
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		alert.setContentText("¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
