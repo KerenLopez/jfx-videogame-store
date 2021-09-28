@@ -18,12 +18,12 @@ public class ShelvesHT {
 	}
 
 	public void createShelves() {
-		
+
 		for(int i=0; i<shelves.getMaxSize();i++) {
 			char c=65;
 			c+=i;
 			shelves.add(c, null);
-			
+
 		}
 	}
 
@@ -34,37 +34,44 @@ public class ShelvesHT {
 	}
 
 	public void addGameToShelf(Videogame vg) {
-
-		shelves.search(vg.getShelf()).add(vg.getCode(), vg);
+		if(vg!=null) {
+			HashTable<Integer,Videogame> ht=shelves.search(vg.getShelf());
+			if(ht!=null) {
+				(shelves.search(vg.getShelf())).add(vg.getCode(), vg);
+			}
+			
+		}
 
 	}
-	
+
 	public ArrayList<Videogame> returnGamesCatalog(){
 		ArrayList<Videogame> catalog=new ArrayList<>();
 		for(int i=0; i<shelves.getMaxSize();i++){
-			catalog.addAll(shelves.elements().get(i).elements());
+			if(shelves.elements().get(i)!=null && !(shelves.elements().get(i).elements()).isEmpty()) {
+				catalog.addAll(shelves.elements().get(i).elements());
+			}
 		}
 		return catalog;
-		
+
 	}
-	
+
 	public ArrayList<Character> returnShelvesInd(){
 		ArrayList<Character> shelvesInd=new ArrayList<>();
-		
+
 		for(int i=0; i<shelves.getMaxSize();i++) {
 			char c=65;
 			c+=i;
-	
+
 			if( shelves.search(c)==null) {
 				shelvesInd.add(c);
 			}
 		}
 		return shelvesInd;
 	}
-	
+
 	public ArrayList<Character> returnShelfs(){
 		ArrayList<Character> shelvesInd=new ArrayList<>();
-		
+
 		for(int i=0; i<shelves.getMaxSize();i++) {
 			char c=65;
 			c+=i;

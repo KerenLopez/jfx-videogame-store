@@ -18,6 +18,10 @@ public class VideogameStore {
 		clients = new ArrayList<>();
                 cashiersQueue=new Queuee<>();
 	}
+	
+	public ShelvesHT getShelves() {
+		return shelves;
+	}
 
 	public Client[] getCashiers() {
 		return cashiers;
@@ -197,7 +201,9 @@ public class VideogameStore {
                 Client client=clientWithLessGame();
                 clientsLine.add(client);
                 int j=positionCashier(client);
-                cashiers[j]=null;
+                if(j!=-1) {
+                	 cashiers[j]=null;
+                }
                 restGame(client);
                 if(cashiersEmpty()) {
                     exit = true;
