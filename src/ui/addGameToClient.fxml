@@ -126,10 +126,9 @@
                   </Button>
                </children>
             </GridPane>
-<<<<<<< HEAD
             <VBox layoutX="22.0" layoutY="52.0" prefHeight="91.0" prefWidth="469.0">
                <children>
-                  <Label prefHeight="30.0" prefWidth="434.0" text="Â¿Por cual mÃ©todo le gustaria ordenar sus juegos?" textAlignment="CENTER">
+                  <Label prefHeight="30.0" prefWidth="434.0" text="¿Por cual método le gustaria ordenar sus juegos?" textAlignment="CENTER">
                      <font>
                         <Font name="Juice ITC" size="24.0" />
                      </font>
@@ -159,20 +158,6 @@
                </children>
             </VBox>
             <Label layoutX="569.0" layoutY="-2.0" text="Catalogo de juegos">
-=======
-            <Button fx:id="btAddGameToClient" disable="true" layoutX="120.0" layoutY="214.0" mnemonicParsing="false" onAction="#addGametoclient" text="Agregar Juego">
-               <font>
-                  <Font name="Impact" size="20.0" />
-               </font>
-            </Button>
-            <Button layoutX="724.0" layoutY="507.0" mnemonicParsing="false" onAction="#nextScreenSection2" text="Siguiente">
-               <font>
-                  <Font name="Impact" size="20.0" />
-               </font>
-            </Button>
-            <ComboBox fx:id="comboxClients" layoutX="204.0" layoutY="176.0" prefWidth="150.0" promptText="Seleccionar" />
-            <Label layoutX="35.0" layoutY="169.0" prefHeight="39.0" prefWidth="171.0" text="Seleccionar cliente">
->>>>>>> cf3ca61ad8f2aeb60bbdb54a6f2544269547bdb9
                <font>
                   <Font name="Juice ITC" size="26.0" />
                </font>
