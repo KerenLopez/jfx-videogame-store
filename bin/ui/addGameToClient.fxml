@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="screenAddGameToClient" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="screenAddGameToClient" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="844.0" BorderPane.alignment="CENTER">
          <children>
@@ -52,6 +52,14 @@
                               <Insets left="125.0" top="10.0" />
                            </VBox.margin>
                         </Button>
+                        <Label alignment="CENTER" text="Seleccione el juego de la tabla:">
+                           <font>
+                              <Font name="Juice ITC" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="90.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
                      </children>
                      <BorderPane.margin>
                         <Insets />
