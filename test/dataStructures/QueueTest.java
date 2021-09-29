@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test;
 
 import model.Client;
 
-public class QueueeTest {
+public class QueueTest {
     
-    private Queuee<Client> queuee;
+    private Queue<Client> queuee;
     
     public void setupScenary1() {
-        queuee =new Queuee<Client>();
+        queuee =new Queue<Client>();
     }
     
     public void setupScenary2() {
-        queuee =new Queuee<Client>();
+        queuee =new Queue<Client>();
         Client cl1 = new Client("52295812","INSERTION"); 
         Client cl2= new Client("36984517","SELECTION"); 
         queuee.enqueue(cl1);

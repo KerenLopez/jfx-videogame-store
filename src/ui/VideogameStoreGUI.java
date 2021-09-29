@@ -457,54 +457,51 @@ public class VideogameStoreGUI {
 	public void addGametoclient(ActionEvent event) {
 		Videogame selectGameInCatalogue=tvGameslist.getSelectionModel().getSelectedItem();
 		Client clientID = comboxClients.getValue();
+                String message="";
 		if(clientID!=null){
+            message=videogame.addGameToClient(selectGameInCatalogue,clientID);
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Informacion");
 			alert.setHeaderText(null);
-			alert.setContentText(videogame.addGameToClient(selectGameInCatalogue,clientID));
+			alert.setContentText(message);
 			alert.showAndWait();
 			btAddGameToClient.setDisable(true);
 			tvClientList.getItems().clear();
 			initializeClientsTableView();
 		}
 		else{
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("Informacion");
-			alert.setHeaderText(null);
-			alert.setContentText("Por favor escoger un cliente");
-			alert.showAndWait();
+			showValidationErrorAlert();
 		}
 	}
+
+
 
 	@FXML
 	public void buttonAddclient(ActionEvent event) {
 		String strSort = getRadioButtonSortsAlgorithm();
 		String message="";
 		if(!txtIdClient.getText().equals("") && strSort!="no"){
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("Confirmacion de registro");
-			alert.setHeaderText("Mensaje de confirmacion");
-			alert.setContentText("Estas seguro de confirmar esta informacion?");
-			Optional<ButtonType> result = alert.showAndWait();
+			Optional<ButtonType> result = askToContinue();
+                        Alert alert = new Alert(AlertType.INFORMATION);
 
 			if (result.get() == ButtonType.OK){
 				message=videogame.addClient(txtIdClient.getText(), strSort);
-				txtIdClient.setText("");
+				alert.setTitle("Informacion");
+                                alert.setHeaderText(null);
 				alert.setContentText(message);
 				alert.showAndWait();
+                                txtIdClient.setText("");
 				initializeClientsTableView();
 				ObservableList<Client> observableComboBoxClients= FXCollections.observableArrayList(videogame.getClients());
 				comboxClients.setItems(observableComboBoxClients);
 			}
 		}
 		else {
-			Alert alert = new Alert(Alert.AlertType.WARNING);
-			alert.setTitle("Error de registro");
-			alert.setHeaderText("Mensaje de advertencia");
-			alert.setContentText("Por favor llene todos los campos que se le solicitan!");
-			alert.showAndWait();
+			showValidationErrorAlert();
 		}
 	}
+
+
 
 	public void showValidationErrorAlert() {
 		Alert alert = new Alert(AlertType.ERROR);

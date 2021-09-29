@@ -1,12 +1,12 @@
 package dataStructures;
 
-public class Queuee<T> implements IQueue<T>{
+public class Queue<T> implements IQueue<T>{
     
     private NodeQ<T> front;
     private NodeQ<T> back;
     private int size;
 
-    public Queuee() {
+    public Queue() {
         front = null;
         back = null;
         size=0;

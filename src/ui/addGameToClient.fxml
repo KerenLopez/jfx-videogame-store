@@ -128,7 +128,7 @@
             </GridPane>
             <VBox layoutX="22.0" layoutY="52.0" prefHeight="91.0" prefWidth="469.0">
                <children>
-                  <Label prefHeight="30.0" prefWidth="434.0" text="¿Por cual método le gustaria ordenar sus juegos?" textAlignment="CENTER">
+                  <Label prefHeight="30.0" prefWidth="434.0" text="Por cual metodo le gustaria ordenar sus juegos?" textAlignment="CENTER">
                      <font>
                         <Font name="Juice ITC" size="24.0" />
                      </font>

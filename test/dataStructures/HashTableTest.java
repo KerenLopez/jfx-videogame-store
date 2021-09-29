@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import model.Videogame;
 
-class HashTableTest {
-	HashTable<Integer, Videogame> shelves;
+public class HashTableTest {
+	
+	private HashTable<Integer, Videogame> shelves;
 	
 	public void setupScenary1() {
 		shelves=new HashTable<>(7);

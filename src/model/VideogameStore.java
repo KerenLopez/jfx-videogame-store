@@ -1,6 +1,6 @@
 package model;
 
-import dataStructures.Queuee;
+import dataStructures.Queue;
 import java.util.ArrayList;
 
 import exceptions.CodeLengthException;
@@ -12,11 +12,11 @@ public class VideogameStore {
 
 	private Client[] cashiers;
 	private ShelvesHT shelves;
-        private Queuee<Client> cashiersQueue;
+        private Queue<Client> cashiersQueue;
 
 	public VideogameStore() {
 		clients = new ArrayList<>();
-                cashiersQueue=new Queuee<>();
+                cashiersQueue=new Queue<>();
 	}
 	
 	public ShelvesHT getShelves() {
